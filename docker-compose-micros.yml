@@ -1,0 +1,43 @@
+version: "3.3"
+
+services:
+  lumberer:
+    image: maanex/lumberer:latest
+    volumes:
+      - logfiles:/storage
+    environment:
+      STORAGE_PATH: "../storage"
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.lumberer.entrypoints=http
+        - traefik.http.routers.lumberer.rule=PathPrefix(`/logging`)
+        - traefik.http.routers.lumberer.middlewares=lumberer-stripprefix
+        - traefik.http.middlewares.lumberer-stripprefix.stripprefix.prefixes=/logging
+        - traefik.http.services.lumberer.loadbalancer.server.port=9914
+
+  thumbnailer:
+    image: maanex/thumbnailer:latest
+    environment:
+      FREESTUFF_KEY: "verysecret"
+      METRICS_AUTH: "yikes"
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.thumbnailer.entrypoints=http
+        # - traefik.http.routers.thumbnailer.rule=Host(`thumbnails.freestuffbot.xyz`)
+        - traefik.http.routers.thumbnailer.rule=Host(`green.localhost`)
+        - traefik.http.services.thumbnailer.loadbalancer.server.port=9915
+
+networks:
+  traefik-public:
+    external: true
+
+volumes:
+  logfiles: {}

@@ -1,0 +1,91 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: traefik:2.2
+    command:
+      - --api.insecure
+      - --providers.docker
+      - --providers.docker.swarmmode
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.http.address=:80
+      - --entrypoints.metrics.address=:8082
+      - --metrics.prometheus
+      - --metrics.prometheus.entryPoint=metrics
+    networks:
+      - traefik-public
+    ports:
+      - 80:80     # web main
+      - 8080:8080 # traefik
+      - 8082:8082 # traefik metrics
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.enable
+        - traefik.docker.network=traefik-public
+
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - traefik-public
+    deploy:
+      placement:
+        constraints:
+        - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.prometheus.entrypoints=http
+        - traefik.http.routers.prometheus.rule=Host(`red.localhost`)
+        # - traefik.http.routers.prometheus.service=prometheus
+        # - traefik.http.services.prometheus.loadbalancer.server.port=9090
+
+  grafana:
+    image: grafana/grafana
+    # depends_on:
+    #   - prometheus
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - traefik-public
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.grafana.entrypoints=http
+        - traefik.http.routers.grafana.rule=Host(`blue.localhost`)
+        # - traefik.http.routers.grafana.service=grafana
+        # - traefik.http.services.grafana.loadbalancer.server.port=3000
+
+
+networks:
+  traefik-public:
+    external: true
+
+volumes:
+  prometheus-data: {}
+  grafana-data: {}

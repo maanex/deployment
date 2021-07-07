@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 1m
+  scrape_timeout: 10s
+  evaluation_interval: 1m
+  follow_redirects: true
+
+scrape_configs:
+  - job_name: thumbnailer
+    honor_timestamps: true
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    metrics_path: /metrics/yikes
+    scheme: https
+    static_configs:
+      - targets:
+        - thumbnails.freestuffbot.xyz
+
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    scheme: http
+    static_configs:
+      - targets:
+        - localhost:9090
+
+  - job_name: 'traefik'
+    scrape_interval: 5s
+    dns_sd_configs:
+      - names: ['tasks.traefik']
+        type: 'A'
+        port: 8082

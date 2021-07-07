@@ -1,0 +1,3 @@
+diagrams
+
+# and additionally https://graphviz.gitlab.io/download/

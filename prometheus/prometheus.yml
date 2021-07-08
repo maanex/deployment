@@ -9,7 +9,10 @@ scrape_configs:
     honor_timestamps: true
     scrape_interval: 1m
     scrape_timeout: 10s
-    metrics_path: /metrics/yikes
+    metrics_path: /metrics
+    authorization:
+      credentials: YIKES_TODO_THIS_THIS_THE_AUTH_HEADER
+      type: Token
     scheme: https
     static_configs:
       - targets:

@@ -1,7 +1,33 @@
 version: "3.3"
 
 services:
+  test:
+    image: maanex/freestuffmanager:latest
+    environment:
+      FSM_SESSION_SECRET: "wubbalubbadubdub"
+    networks:
+      - traefik-public
+    secrets:
+      - FSM_MONGO_URL
+      # - FSM_AUDITLOG_WEBHOOK
+      - FSM_HELPER_ID
+      - FSM_HELPER_SECRET
+      # - FSM_HELPER_TOKEN
+      - FSM_DBLSTATS_TOKEN
+      # - FSM_TOPGG_TOKEN
+      - FSM_FIREBASE_KEY
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.routers.tester.entrypoints=http
+        - traefik.http.routers.tester.rule=PathPrefix(`white.localhost`)
+        - traefik.http.services.tester.loadbalancer.server.port=9002
 
 # networks:
 #   inbound:
+#     external: true
+
+# secrets:
+#   test:
 #     external: true

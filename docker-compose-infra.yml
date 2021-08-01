@@ -108,3 +108,4 @@ networks:
 volumes:
   prometheus-data: {}
   grafana-data: {}
+  traefik-public-certificates: {}

@@ -31,7 +31,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-          - node.labels.traefik-public.traefik-public-certificates == true
       update_config:
         parallelism: 1
         delay: 10s

@@ -31,7 +31,7 @@ services:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
         - traefik.http.routers.swarmpit.entrypoints=http
-        - traefik.http.routers.swarmpit.rule=Host(`cyan.localhost`)
+        - traefik.http.routers.swarmpit.rule=Host(`cluster.infra.maanex.me`)
         - traefik.http.services.swarmpit.loadbalancer.server.port=8080
 
   db:

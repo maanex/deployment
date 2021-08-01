@@ -4,7 +4,8 @@ services:
   traefik:
     image: traefik:2.2
     command:
-      - --api.insecure
+      # - --api.insecure
+      - --api.dashboard
       - --providers.docker
       - --providers.docker.swarmmode
       - --providers.docker.exposedbydefault=false
@@ -16,7 +17,6 @@ services:
       - traefik-public
     ports:
       - 80:80     # web main
-      - 8080:8080 # traefik
       - 8082:8082 # traefik metrics
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -33,11 +33,15 @@ services:
       labels:
         - traefik.enable
         - traefik.docker.network=traefik-public
+        - traefik.http.services.traefik.loadbalancer.server.port=888
+        - traefik.http.routers.traefik.rule=Host(`traefik.infra.maanex.me`)
+        - traefik.http.routers.traefik.entrypoints=http
+        - traefik.http.routers.traefik.service=api@internal
 
   prometheus:
     image: prom/prometheus:v2.1.0
     volumes:
-      - prometheus-data:/prometheus
+      # - prometheus-data:/prometheus
       - ./prometheus/:/etc/prometheus/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -50,11 +54,11 @@ services:
         - node.role == manager
       restart_policy:
         condition: on-failure
-      labels:
-        - traefik.docker.network=traefik-public
-        - traefik.http.routers.prometheus.entrypoints=http
-        - traefik.http.routers.prometheus.rule=Host(`red.localhost`)
-        # - traefik.http.routers.prometheus.service=prometheus
+      # labels:
+        # - traefik.enable=true
+        # - traefik.docker.network=traefik-public
+        # - traefik.http.routers.prometheus.entrypoints=http
+        # - traefik.http.routers.prometheus.rule=Host(`red.localhost`)
         # - traefik.http.services.prometheus.loadbalancer.server.port=9090
 
   grafana:
@@ -62,7 +66,7 @@ services:
     # depends_on:
     #   - prometheus
     volumes:
-      - grafana-data:/var/lib/grafana
+      # - grafana-data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
       - ./grafana/config.monitoring
@@ -75,11 +79,11 @@ services:
       restart_policy:
         condition: on-failure
       labels:
+        - traefik.enable=true
         - traefik.docker.network=traefik-public
         - traefik.http.routers.grafana.entrypoints=http
-        - traefik.http.routers.grafana.rule=Host(`blue.localhost`)
-        # - traefik.http.routers.grafana.service=grafana
-        # - traefik.http.services.grafana.loadbalancer.server.port=3000
+        - traefik.http.routers.grafana.rule=Host(`monitoring.infra.maanex.me`)
+        - traefik.http.services.grafana.loadbalancer.server.port=3000
 
 
 networks:

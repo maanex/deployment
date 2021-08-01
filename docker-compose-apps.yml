@@ -1,33 +1,55 @@
 version: "3.3"
 
 services:
-  test:
-    image: maanex/freestuffmanager:latest
+  manager:
+    image: ghcr.io/freestuffbot/manager:master
     environment:
-      FSM_SESSION_SECRET: "wubbalubbadubdub"
+      FSM_LUMBERER_URL: "http://micros_lumberer:9914"
+      FSM_HELPER_ID: "855181940784627712"
     networks:
       - traefik-public
+      - logging
     secrets:
+      - FSM_THUMBNAILER_PRIVATE_KEY
+      - FSM_SERVERAUTH_PRIVATE_KEY
       - FSM_MONGO_URL
-      # - FSM_AUDITLOG_WEBHOOK
       - FSM_HELPER_ID
       - FSM_HELPER_SECRET
-      # - FSM_HELPER_TOKEN
+      - FSM_HELPER_TOKEN
       - FSM_DBLSTATS_TOKEN
-      # - FSM_TOPGG_TOKEN
+      - FSM_TOPGG_TOKEN
       - FSM_FIREBASE_KEY
     deploy:
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
-        - traefik.http.routers.tester.entrypoints=http
-        - traefik.http.routers.tester.rule=PathPrefix(`white.localhost`)
-        - traefik.http.services.tester.loadbalancer.server.port=9002
+        - traefik.http.routers.manager.entrypoints=http
+        - traefik.http.routers.manager.rule=Host(`api.freestuffbot.xyz`)
+        - traefik.http.services.manager.loadbalancer.server.port=9002
 
-# networks:
-#   inbound:
-#     external: true
+networks:
+  traefik-public:
+    external: true
+  logging:
+    external: true
 
-# secrets:
-#   test:
-#     external: true
+secrets:
+  FSM_THUMBNAILER_PRIVATE_KEY:
+    external: true
+  FSM_SERVERAUTH_PRIVATE_KEY:
+    external: true
+
+  FSM_AUDITLOG_WEBHOOK:
+    external: true
+  FSM_MONGO_URL:
+    external: true
+  FSM_HELPER_SECRET:
+    external: true
+  FSM_HELPER_TOKEN:
+    external: true
+  FSM_DBLSTATS_TOKEN:
+    external: true
+  FSM_TOPGG_TOKEN:
+    external: true
+  FSM_FIREBASE_KEY:
+    external: true

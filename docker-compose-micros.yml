@@ -6,18 +6,11 @@ services:
     volumes:
       - logfiles:/storage
     environment:
-      STORAGE_PATH: "../storage"
+      STORAGE_PATH: "/storage"
     networks:
-      - traefik-public
+      - logging
     deploy:
       labels:
-        - traefik.enable=true
-        - traefik.docker.network=traefik-public
-        - traefik.http.routers.lumberer.entrypoints=http
-        - traefik.http.routers.lumberer.rule=PathPrefix(`/logging`)
-        - traefik.http.routers.lumberer.middlewares=lumberer-stripprefix
-        - traefik.http.middlewares.lumberer-stripprefix.stripprefix.prefixes=/logging
-        - traefik.http.services.lumberer.loadbalancer.server.port=9914
 
   thumbnailer:
     image: maanex/thumbnailer:latest
@@ -31,12 +24,14 @@ services:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
         - traefik.http.routers.thumbnailer.entrypoints=http
-        # - traefik.http.routers.thumbnailer.rule=Host(`thumbnails.freestuffbot.xyz`)
-        - traefik.http.routers.thumbnailer.rule=Host(`green.localhost`)
+        - traefik.http.routers.thumbnailer.rule=Host(`thumbnails.freestuffbot.xyz`)
+        # - traefik.http.routers.thumbnailer.rule=Host(`green.localhost`)
         - traefik.http.services.thumbnailer.loadbalancer.server.port=9915
 
 networks:
   traefik-public:
+    external: true
+  logging:
     external: true
 
 volumes:

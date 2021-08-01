@@ -41,20 +41,15 @@ services:
       restart_policy:
         condition: on-failure
       labels:
-        - traefik-public.traefik-public-certificates=true
         - traefik.enable
         - traefik.docker.network=traefik-public
-        - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
-        - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
-        - traefik.http.routers.traefik-public-http.rule=Host(`traefik.infra.maanex.me`)
-        - traefik.http.routers.traefik-public-http.entrypoints=http
-        - traefik.http.routers.traefik-public-http.middlewares=https-redirect
-        - traefik.http.routers.traefik-public-https.rule=Host(`traefik.infra.maanex.me`)
-        - traefik.http.routers.traefik-public-https.entrypoints=https
-        - traefik.http.routers.traefik-public-https.tls=true
-        - traefik.http.routers.traefik-public-https.service=api@internal
-        - traefik.http.routers.traefik-public-https.tls.certresolver=le
-        - traefik.https.services.traefik-public-https.loadbalancer.server.port=8080
+        - traefik.https.services.traefik-api.loadbalancer.server.port=8080
+        - traefik.http.routers.traefik-api.rule=Host(`traefik.infra.maanex.me`)
+        - traefik.http.routers.traefik-api.entrypoints=https
+        - traefik.http.routers.traefik-api.tls=true
+        - traefik.http.routers.traefik-api.service=api@internal
+        - traefik.http.routers.traefik-api.tls.certresolver=le
+        - traefik.http.routers.traefik.tls.certresolver=letsencrypt
         
   prometheus:
     image: prom/prometheus:v2.1.0

@@ -12,9 +12,9 @@ services:
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
       - --entrypoints.metrics.address=:8082
-      - --certificatesresolvers.le.acme.email=${EMAIL?Variable not set}
-      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
-      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.email=${EMAIL?Variable not set}
+      - --certificatesresolvers.letsencrypt.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.letsencrypt.acme.httpChallenge.entryPoint=http
       - --metrics.prometheus
       - --metrics.prometheus.entryPoint=metrics
     networks:

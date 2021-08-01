@@ -1,5 +1,6 @@
 
-export EMAIL=""
+# export EMAIL=""
+export CF_DNS_API_TOKEN_FILE="./letsencrypt/cf-dns-api-token.txt"
 
 
 echo "Creating public network"

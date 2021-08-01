@@ -17,6 +17,8 @@ services:
       - --certificatesresolvers.letsencrypt.acme.email=team@freestuffbot.xyz
       - --certificatesresolvers.letsencrypt.acme.storage=/certificates/acme.json
       - --certificatesresolvers.letsencrypt.acme.httpChallenge.entryPoint=http
+      - --certificatesresolvers.letsencrypt.acme.httpChallenge.provider=cloudflare
+      - --certificatesresolvers.letsencrypt.acme.caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
       - --metrics.prometheus
       - --metrics.prometheus.entryPoint=metrics
     networks:

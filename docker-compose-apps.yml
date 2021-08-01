@@ -23,9 +23,9 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
-        - traefik.http.routers.manager.entrypoints=http
-        - traefik.http.routers.manager.rule=Host(`api.freestuffbot.xyz`)
-        - traefik.http.services.manager.loadbalancer.server.port=9002
+        - traefik.https.routers.manager.entrypoints=https
+        - traefik.https.routers.manager.rule=Host(`api.freestuffbot.xyz`)
+        - traefik.https.services.manager.loadbalancer.server.port=9002
 
 networks:
   traefik-public:

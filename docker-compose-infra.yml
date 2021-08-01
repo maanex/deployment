@@ -10,34 +10,49 @@ services:
       - --providers.docker.swarmmode
       - --providers.docker.exposedbydefault=false
       - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
       - --entrypoints.metrics.address=:8082
+      - --certificatesresolvers.le.acme.email=${EMAIL?Variable not set}
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
       - --metrics.prometheus
       - --metrics.prometheus.entryPoint=metrics
     networks:
       - traefik-public
     ports:
       - 80:80     # web main
+      - 443:443     # https
       - 8082:8082 # traefik metrics
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik-public-certificates:/certificates
     deploy:
       mode: global
       placement:
         constraints:
           - node.role == manager
+          - node.labels.traefik-public.traefik-public-certificates == true
       update_config:
         parallelism: 1
         delay: 10s
       restart_policy:
         condition: on-failure
       labels:
+        - traefik-public.traefik-public-certificates=true
         - traefik.enable
         - traefik.docker.network=traefik-public
-        - traefik.http.services.traefik.loadbalancer.server.port=888
-        - traefik.http.routers.traefik.rule=Host(`traefik.infra.maanex.me`)
-        - traefik.http.routers.traefik.entrypoints=http
-        - traefik.http.routers.traefik.service=api@internal
-
+        - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+        - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+        - traefik.http.routers.traefik-public-http.rule=Host(`traefik.infra.maanex.me`)
+        - traefik.http.routers.traefik-public-http.entrypoints=http
+        - traefik.http.routers.traefik-public-http.middlewares=https-redirect
+        - traefik.http.routers.traefik-public-https.rule=Host(`traefik.infra.maanex.me`)
+        - traefik.http.routers.traefik-public-https.entrypoints=https
+        - traefik.http.routers.traefik-public-https.tls=true
+        - traefik.http.routers.traefik-public-https.service=api@internal
+        - traefik.http.routers.traefik-public-https.tls.certresolver=le
+        - traefik.https.services.traefik-public-https.loadbalancer.server.port=8080
+        
   prometheus:
     image: prom/prometheus:v2.1.0
     volumes:
@@ -81,9 +96,9 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
-        - traefik.http.routers.grafana.entrypoints=http
-        - traefik.http.routers.grafana.rule=Host(`monitoring.infra.maanex.me`)
-        - traefik.http.services.grafana.loadbalancer.server.port=3000
+        - traefik.https.routers.grafana.entrypoints=https
+        - traefik.https.routers.grafana.rule=Host(`monitoring.infra.maanex.me`)
+        - traefik.https.services.grafana.loadbalancer.server.port=3000
 
 
 networks:

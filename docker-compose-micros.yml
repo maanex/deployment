@@ -23,10 +23,10 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
-        - traefik.http.routers.thumbnailer.entrypoints=http
-        - traefik.http.routers.thumbnailer.rule=Host(`thumbnails.freestuffbot.xyz`)
-        # - traefik.http.routers.thumbnailer.rule=Host(`green.localhost`)
-        - traefik.http.services.thumbnailer.loadbalancer.server.port=9915
+        - traefik.https.routers.thumbnailer.entrypoints=https
+        - traefik.https.routers.thumbnailer.rule=Host(`thumbnails.freestuffbot.xyz`)
+        # - traefik.https.routers.thumbnailer.rule=Host(`green.localhost`)
+        - traefik.https.services.thumbnailer.loadbalancer.server.port=9915
 
 networks:
   traefik-public:

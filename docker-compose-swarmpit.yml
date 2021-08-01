@@ -16,6 +16,8 @@ services:
     networks:
       - net
       - traefik-public
+    ports:
+      - 8080:2082
     deploy:
       resources:
         limits:

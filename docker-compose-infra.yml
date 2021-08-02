@@ -49,6 +49,10 @@ services:
         - traefik.http.routers.traefik-api.tls
         - traefik.http.routers.traefik-api.service=api@internal
         - traefik.http.routers.traefik-api.tls.certresolver=letsencrypt
+        - traefik.http.routers.traefik-api.tls.domains[0].main=freestuffbot.xyz
+        - traefik.http.routers.traefik-api.tls.domains[0].sans=*.freestuffbot.xyz
+        - traefik.http.routers.traefik-api.tls.domains[1].main=infra.maanex.me
+        - traefik.http.routers.traefik-api.tls.domains[1].sans=*.infra.maanex.me
         
   prometheus:
     image: prom/prometheus:v2.1.0

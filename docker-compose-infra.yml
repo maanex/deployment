@@ -30,9 +30,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik-public-certificates:/certificates
-    env:
-      CF_DNS_API_TOKEN_FILE: /run/secrets/cf-api-token
-      CF_ZONE_API_TOKEN_FILE: /run/secrets/cf-api-token
     deploy:
       mode: global
       placement:
@@ -43,6 +40,9 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+      env:
+        CF_DNS_API_TOKEN_FILE: /run/secrets/cf-api-token
+        CF_ZONE_API_TOKEN_FILE: /run/secrets/cf-api-token
       labels:
         - traefik.enable
         - traefik.docker.network=traefik-public

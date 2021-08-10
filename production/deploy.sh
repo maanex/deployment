@@ -16,3 +16,6 @@ docker stack deploy -c docker-compose-micros.yml micros
 
 echo ":: Deploying Apps"
 docker stack deploy -c docker-compose-apps.yml apps --with-registry-auth
+
+echo ":: Deploying Tude Stack"
+docker stack deploy -c docker-compose-tude.yml tude --with-registry-auth

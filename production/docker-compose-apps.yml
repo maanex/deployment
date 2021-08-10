@@ -43,6 +43,8 @@ secrets:
     external: true
   FSM_MONGO_URL:
     external: true
+  FSM_HELPER_ID:
+    external: true
   FSM_HELPER_SECRET:
     external: true
   FSM_HELPER_TOKEN:

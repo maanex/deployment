@@ -5,6 +5,16 @@ services:
     image: ghcr.io/maanex/tudebot4:master
     networks:
       - logging
+    secrets:
+      - TUDEBOT_DBOT_TOKEN
+      - TUDEBOT_DBOT_ID
+      - TUDEBOT_MONGO_URL
+      - TUDEBOT_WIT_TOKEN
+      - TUDEBOT_OBRAZIUM_TOKEN
+      - TUDEBOT_GOOGLE_KEY
+      - TUDEBOT_KSOFT_TOKEN
+      - TUDEBOT_ALEXA_KEY
+      - TUDEBOT_GIBU_ENDPOINT
     deploy:
       mode: global
       # placement:

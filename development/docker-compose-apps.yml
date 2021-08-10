@@ -6,6 +6,7 @@ services:
     environment:
       FSM_LUMBERER_URL: "http://micros_lumberer:9914"
       FSM_HELPER_ID: "855181940784627712"
+      NODE_ENV: "development"
     networks:
       - traefik-public
       - logging
@@ -42,6 +43,8 @@ secrets:
   FSM_AUDITLOG_WEBHOOK:
     external: true
   FSM_MONGO_URL:
+    external: true
+  FSM_HELPER_ID:
     external: true
   FSM_HELPER_SECRET:
     external: true

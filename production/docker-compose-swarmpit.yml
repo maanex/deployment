@@ -17,7 +17,6 @@ services:
       - net
       - traefik-public
     ports:
-      - 8080:2082
       - 2082:8080
     deploy:
       resources:
@@ -26,7 +25,7 @@ services:
           memory: 1024M
         reservations:
           cpus: '0.25'
-          memory: 512M
+          memory: 256M
       placement:
         constraints:
           - node.role == manager

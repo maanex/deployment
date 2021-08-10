@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+  bot:
+    image: ghcr.io/maanex/tudebot4:master
+    networks:
+      - logging
+    deploy:
+      mode: global
+      # placement:
+      #   constraints:
+      #     - node.role != manager
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  logging:
+    external: true
+
+secrets:
+  TUDEBOT_DBOT_TOKEN:
+    external: true
+  TUDEBOT_DBOT_ID:
+    external: true
+  TUDEBOT_MONGO_URL:
+    external: true
+  TUDEBOT_WIT_TOKEN:
+    external: true
+  TUDEBOT_OBRAZIUM_TOKEN:
+    external: true
+  TUDEBOT_GOOGLE_KEY:
+    external: true
+  TUDEBOT_KSOFT_TOKEN:
+    external: true
+  TUDEBOT_ALEXA_KEY:
+    external: true
+  TUDEBOT_GIBU_ENDPOINT:
+    external: true

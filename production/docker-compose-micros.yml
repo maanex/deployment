@@ -19,6 +19,8 @@ services:
       METRICS_AUTH: "yikes"
     networks:
       - traefik-public
+    ports:
+      - 9915:9915 # TODO remove with traefik
     deploy:
       labels:
         - traefik.enable=true

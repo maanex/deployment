@@ -1,0 +1,37 @@
+version: "3.3"
+
+services:
+  fsdiscord:
+    image: ghcr.io/freestuffbot/discord:master
+    environment:
+      NODE_ENV: "production"
+    # networks:
+    #   - logging
+    secrets:
+      - FSB_DBOT_TOKEN
+      - FSB_DBOT_ID
+      - FSB_MONGO_URL
+      - FSB_FSAPI_KEY
+      - FSB_SENTRY_DSN
+    deploy:
+      mode: replicated
+      replicas: 4
+      placement:
+        constraints:
+          - node.hostname == co1
+
+# networks:
+#   logging:
+#     external: true
+
+secrets:
+  FSB_DBOT_TOKEN:
+    external: true
+  FSB_DBOT_ID:
+    external: true
+  FSB_MONGO_URL:
+    external: true
+  FSB_FSAPI_KEY:
+    external: true
+  FSB_SENTRY_DSN:
+    external: true

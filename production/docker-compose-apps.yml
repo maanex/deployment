@@ -23,6 +23,9 @@ services:
       - FSM_TOPGG_TOKEN
       - FSM_FIREBASE_KEY
     deploy:
+      placement:
+        constraints:
+          - node.role == manager
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public

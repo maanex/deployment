@@ -8,15 +8,11 @@ services:
     # networks:
     #   - logging
     secrets:
-      - FSM_THUMBNAILER_PRIVATE_KEY
-      - FSM_SERVERAUTH_PRIVATE_KEY
-      - FSM_MONGO_URL
-      - FSM_HELPER_ID
-      - FSM_HELPER_SECRET
-      - FSM_HELPER_TOKEN
-      - FSM_DBLSTATS_TOKEN
-      - FSM_TOPGG_TOKEN
-      - FSM_FIREBASE_KEY
+      - FSB_DBOT_TOKEN
+      - FSB_DBOT_ID
+      - FSB_MONGO_URL
+      - FSB_FSAPI_KEY
+      - FSB_SENTRY_DSN
     deploy:
       mode: global
       replicas: 1

@@ -1,0 +1,41 @@
+version: "3.3"
+
+services:
+  fsdiscord:
+    image: ghcr.io/freestuffbot/discord:master
+    environment:
+      NODE_ENV: "production"
+    # networks:
+    #   - logging
+    secrets:
+      - FSM_THUMBNAILER_PRIVATE_KEY
+      - FSM_SERVERAUTH_PRIVATE_KEY
+      - FSM_MONGO_URL
+      - FSM_HELPER_ID
+      - FSM_HELPER_SECRET
+      - FSM_HELPER_TOKEN
+      - FSM_DBLSTATS_TOKEN
+      - FSM_TOPGG_TOKEN
+      - FSM_FIREBASE_KEY
+    deploy:
+      mode: global
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == gg1
+
+# networks:
+#   logging:
+#     external: true
+
+secrets:
+  FSB_DBOT_TOKEN:
+    external: true
+  FSB_DBOT_ID:
+    external: true
+  FSB_MONGO_URL:
+    external: true
+  FSB_FSAPI_KEY:
+    external: true
+  FSB_SENTRY_DSN:
+    external: true

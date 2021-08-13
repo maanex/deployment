@@ -5,6 +5,7 @@ services:
     image: ghcr.io/freestuffbot/discord:master
     environment:
       NODE_ENV: "production"
+      NODE_ID: "co1"
     # networks:
     #   - logging
     secrets:

@@ -6,7 +6,7 @@ services:
     environment:
       NODE_ENV: "production"
       NODE_ID: "gg1"
-      FSB_REDIS_HOST: "infra_redis"
+      FSB_REDIS_HOST: "redis"
     networks:
       - redis
     # - logging

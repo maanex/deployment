@@ -9,8 +9,10 @@ services:
       STORAGE_PATH: "/storage"
     networks:
       - logging
-    # deploy:
-    #   labels:
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
 
   thumbnailer:
     image: maanex/thumbnailer:latest

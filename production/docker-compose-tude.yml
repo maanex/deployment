@@ -16,7 +16,6 @@ services:
       - TUDEBOT_ALEXA_KEY
       - TUDEBOT_GIBU_ENDPOINT
     deploy:
-      mode: global
       placement:
         constraints:
           - node.role == manager

@@ -105,12 +105,22 @@ services:
         - traefik.http.routers.grafana.rule=Host(`monitoring.infra.maanex.me`)
         - traefik.http.routers.grafana.tls.certresolver=letsencrypt
 
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/var/lib/redis
+    networks:
+      - redis
+
 
 networks:
   traefik-public:
+    external: true
+  redis:
     external: true
 
 volumes:
   prometheus-data: {}
   grafana-data: {}
+  redis-data: {}
   traefik-public-certificates: {}

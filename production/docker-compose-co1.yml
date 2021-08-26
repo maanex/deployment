@@ -6,6 +6,7 @@ services:
     environment:
       NODE_ENV: "production"
       NODE_ID: "co1"
+      FSB_REDIS_HOST: "infra_redis"
     # networks:
     #   - logging
     secrets:
@@ -21,9 +22,11 @@ services:
         constraints:
           - node.hostname == co1
 
-# networks:
-#   logging:
-#     external: true
+networks:
+  redis:
+    external: true
+  # logging:
+  #   external: true
 
 secrets:
   FSB_DBOT_TOKEN:

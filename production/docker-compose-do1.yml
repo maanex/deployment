@@ -7,8 +7,9 @@ services:
       NODE_ENV: "production"
       NODE_ID: "do1"
       FSB_REDIS_HOST: "infra_redis"
-    # networks:
-    #   - logging
+    networks:
+      - redis
+    # - logging
     secrets:
       - FSB_DBOT_TOKEN
       - FSB_DBOT_ID

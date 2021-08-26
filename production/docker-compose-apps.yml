@@ -15,6 +15,7 @@ services:
     secrets:
       - FSM_THUMBNAILER_PRIVATE_KEY
       - FSM_SERVERAUTH_PRIVATE_KEY
+      - FSM_AUDITLOG_WEBHOOK
       - FSM_MONGO_URL
       - FSM_HELPER_ID
       - FSM_HELPER_SECRET

@@ -7,8 +7,10 @@ services:
       NODE_ENV: "production"
       NODE_ID: "co1"
       FSB_REDIS_HOST: "redis"
+      FSB_WORKER_HOST: "ws://manager:5525"
     networks:
       - redis
+      - fsm-sockets
     # - logging
     secrets:
       - FSB_DBOT_TOKEN
@@ -25,6 +27,8 @@ services:
 
 networks:
   redis:
+    external: true
+  fsm-sockets:
     external: true
   # logging:
   #   external: true

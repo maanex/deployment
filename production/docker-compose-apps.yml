@@ -10,6 +10,7 @@ services:
     networks:
       - traefik-public
       - logging
+      - fsm-sockets
     ports:
       - 9002:9002 # TODO remove with traefik
     secrets:
@@ -38,6 +39,8 @@ networks:
   traefik-public:
     external: true
   logging:
+    external: true
+  fsm-sockets:
     external: true
 
 secrets:

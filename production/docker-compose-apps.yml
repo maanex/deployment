@@ -24,6 +24,7 @@ services:
       - FSM_DBLSTATS_TOKEN
       - FSM_TOPGG_TOKEN
       - FSM_FIREBASE_KEY
+      - FSM_CURRCONV_KEY
     deploy:
       placement:
         constraints:
@@ -64,4 +65,6 @@ secrets:
   FSM_TOPGG_TOKEN:
     external: true
   FSM_FIREBASE_KEY:
+    external: true
+  FSM_CURRCONV_KEY:
     external: true

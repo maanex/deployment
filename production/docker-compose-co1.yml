@@ -7,7 +7,7 @@ services:
       NODE_ENV: "production"
       NODE_ID: "co1"
       FSB_REDIS_HOST: "redis"
-      FSB_WORKER_HOST: "ws://manager:5525"
+      FSB_WORKER_HOST: "ws://manager:9002"
     networks:
       - redis
       - fsm-sockets

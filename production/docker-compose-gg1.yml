@@ -21,6 +21,8 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      labels:
+        - prometheus-job=fsb
       placement:
         constraints:
           - node.hostname == gg1

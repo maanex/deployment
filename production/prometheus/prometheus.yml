@@ -4,30 +4,47 @@ global:
   evaluation_interval: 1m
   follow_redirects: true
 
+# ref https://prometheus.io/docs/guides/dockerswarm/
 scrape_configs:
-  - job_name: thumbnailer
-    honor_timestamps: true
-    scrape_interval: 1m
-    scrape_timeout: 10s
-    metrics_path: /metrics
-    authorization:
-      credentials: YIKES_TODO_THIS_THIS_THE_AUTH_HEADER
-      type: Token
-    scheme: https
-    static_configs:
-      - targets:
-        - thumbnails.freestuffbot.xyz
+  - job_name: 'dockerswarm'
+    dockerswarm_sd_configs:
+      - host: unix:///var/run/docker.sock
+        role: tasks
+    relabel_configs:
+      - source_labels: [__meta_dockerswarm_task_desired_state]
+        regex: running
+        action: keep
+      - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
+        regex: .+
+        action: keep
+      - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
+        target_label: job
 
-  - job_name: 'prometheus'
-    scrape_interval: 5s
-    scheme: http
-    static_configs:
-      - targets:
-        - localhost:9090
 
-  - job_name: 'traefik'
-    scrape_interval: 5s
-    dns_sd_configs:
-      - names: ['tasks.traefik']
-        type: 'A'
-        port: 8082
+
+  # - job_name: thumbnailer
+  #   honor_timestamps: true
+  #   scrape_interval: 1m
+  #   scrape_timeout: 10s
+  #   metrics_path: /metrics
+  #   authorization:
+  #     credentials: YIKES_TODO_THIS_THIS_THE_AUTH_HEADER
+  #     type: Token
+  #   scheme: https
+  #   static_configs:
+  #     - targets:
+  #       - thumbnails.freestuffbot.xyz
+
+  # - job_name: 'prometheus'
+  #   scrape_interval: 5s
+  #   scheme: http
+  #   static_configs:
+  #     - targets:
+  #       - localhost:9090
+
+  # - job_name: 'traefik'
+  #   scrape_interval: 5s
+  #   dns_sd_configs:
+  #     - names: ['tasks.traefik']
+  #       type: 'A'
+  #       port: 8082

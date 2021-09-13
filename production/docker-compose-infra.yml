@@ -67,6 +67,8 @@ services:
       - '--storage.tsdb.path=/prometheus'
     networks:
       - metrics
+    ports:
+      - 9918:9090
     deploy:
       placement:
         constraints:

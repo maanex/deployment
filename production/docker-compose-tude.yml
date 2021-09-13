@@ -22,8 +22,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: on-failure
 
 networks:
   logging:

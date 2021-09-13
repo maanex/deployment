@@ -66,7 +66,7 @@ services:
   #     - '--config.file=/etc/prometheus/prometheus.yml'
   #     - '--storage.tsdb.path=/prometheus'
   #   networks:
-  #     - traefik-public
+  #     - metrics
   #   deploy:
   #     placement:
   #       constraints:
@@ -80,30 +80,31 @@ services:
   #       # - traefik.http.routers.prometheus.rule=Host(`red.localhost`)
   #       # - traefik.http.services.prometheus.loadbalancer.server.port=9090
 
-  # grafana:
-  #   image: grafana/grafana
-  #   # depends_on:
-  #   #   - prometheus
-  #   volumes:
-  #     # - grafana-data:/var/lib/grafana
-  #     - ./grafana/provisioning/:/etc/grafana/provisioning/
-  #   env_file:
-  #     - ./grafana/config.monitoring
-  #   networks:
-  #     - traefik-public
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.role == manager
-  #     restart_policy:
-  #       condition: on-failure
-  #     labels:
-  #       - traefik.enable=true
-  #       - traefik.docker.network=traefik-public
-  #       - traefik.http.services.grafana.loadbalancer.server.port=3000
-  #       - traefik.http.routers.grafana.entrypoints=https
-  #       - traefik.http.routers.grafana.rule=Host(`monitoring.infra.maanex.me`)
-  #       - traefik.http.routers.grafana.tls.certresolver=letsencrypt
+  grafana:
+    image: grafana/grafana
+    # depends_on:
+    #   - prometheus
+    volumes:
+      # - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    networks:
+      - traefik-public
+      - metrics
+    ports:
+      - 9919:3000
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.http.services.grafana.loadbalancer.server.port=3000
+        - traefik.http.routers.grafana.entrypoints=https
+        - traefik.http.routers.grafana.rule=Host(`monitoring.infra.maanex.me`)
+        - traefik.http.routers.grafana.tls.certresolver=letsencrypt
 
   redis:
     image: redis

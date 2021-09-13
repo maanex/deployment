@@ -61,9 +61,9 @@ services:
     image: prom/prometheus:v2.1.0
     volumes:
       - prometheus-data:/prometheus
-      - ./prometheus/:/etc/prometheus/
+      - /root/services/deployment/production/prometheus/:/etc/prometheus/
     command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--config.file=/root/services/deployment/production/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
     networks:
       - metrics
@@ -84,9 +84,9 @@ services:
     #   - prometheus
     volumes:
       - grafana-data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - /root/services/deployment/production/grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - ./grafana/config.monitoring
+      - /root/services/deployment/production/config.monitoring
     networks:
       - traefik-public
       - metrics

@@ -86,7 +86,7 @@ services:
       - grafana-data:/var/lib/grafana
       - /root/services/deployment/production/grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - /root/services/deployment/production/config.monitoring
+      - /root/services/deployment/production/grafana/config.monitoring
     networks:
       - traefik-public
       - metrics

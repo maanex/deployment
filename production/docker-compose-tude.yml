@@ -5,6 +5,7 @@ services:
     image: ghcr.io/maanex/tudebot4:master
     networks:
       - logging
+      - metrics
     secrets:
       - TUDEBOT_DBOT_TOKEN
       - TUDEBOT_DBOT_ID
@@ -16,6 +17,8 @@ services:
       - TUDEBOT_ALEXA_KEY
       - TUDEBOT_GIBU_ENDPOINT
     deploy:
+      labels:
+        - prometheus-job=tudebot
       placement:
         constraints:
           - node.role == manager
@@ -25,6 +28,8 @@ services:
 
 networks:
   logging:
+    external: true
+  metrics:
     external: true
 
 secrets:

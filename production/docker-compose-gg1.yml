@@ -11,7 +11,7 @@ services:
     networks:
       - redis
       - fsm-sockets
-    # - logging
+      - metrics
     secrets:
       - FSB_DBOT_TOKEN
       - FSB_DBOT_ID
@@ -32,8 +32,8 @@ networks:
     external: true
   fsm-sockets:
     external: true
-  # logging:
-  #   external: true
+  metrics:
+    external: true
 
 secrets:
   FSB_DBOT_TOKEN:

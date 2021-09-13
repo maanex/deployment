@@ -58,7 +58,7 @@ services:
   #       - traefik.http.routers.traefik-api.tls.domains[1].sans=*.infra.maanex.me
         
   prometheus:
-    image: prom/prometheus:v2.1.0
+    image: prom/prometheus
     volumes:
       - prometheus-data:/prometheus
       - /root/services/deployment/production/prometheus/:/etc/prometheus/

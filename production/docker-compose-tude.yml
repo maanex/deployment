@@ -17,8 +17,8 @@ services:
       - TUDEBOT_ALEXA_KEY
       - TUDEBOT_GIBU_ENDPOINT
     deploy:
-      labels:
-        - prometheus-job=tudebot
+      # labels:
+      #   - prometheus-job=tudebot
       placement:
         constraints:
           - node.role == manager

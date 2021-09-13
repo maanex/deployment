@@ -119,6 +119,8 @@ networks:
     external: true
   redis:
     external: true
+  metrics:
+    external: true
 
 volumes:
   prometheus-data: {}

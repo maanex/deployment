@@ -2,7 +2,6 @@ global:
   scrape_interval: 1m
   scrape_timeout: 10s
   evaluation_interval: 1m
-  follow_redirects: true
 
 # ref https://prometheus.io/docs/guides/dockerswarm/
 scrape_configs:

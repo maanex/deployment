@@ -62,13 +62,14 @@ services:
     volumes:
       - prometheus-data:/prometheus
       - /root/services/deployment/production/prometheus/:/etc/prometheus/
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
     networks:
       - metrics
     ports:
-      - 9918:9090
+      - 9918:9090 # TODO REMOVE
     deploy:
       placement:
         constraints:

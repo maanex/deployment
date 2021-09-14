@@ -3,6 +3,8 @@ version: "3.3"
 services:
   bot:
     image: ghcr.io/maanex/tudebot4:master
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - logging
       - metrics

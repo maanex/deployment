@@ -42,13 +42,25 @@ services:
       GA_INTERVAL: 60
       GA_PORT: 80
       GA_METRICS: "rt:pageviews rt:activeUsers"
+    networks:
+      - metrics
     secrets:
       - GA_CREDS
+    deploy:
+      mode: replicated
+      replicas: 4
+      labels:
+        - prometheus-job=fsb
+      placement:
+        constraints:
+          - node.role == manager
 
 networks:
   traefik-public:
     external: true
   logging:
+    external: true
+  metrics:
     external: true
 
 volumes:

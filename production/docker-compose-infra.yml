@@ -113,6 +113,10 @@ services:
       - redis-data:/var/lib/redis
     networks:
       - redis
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
 
 
 networks:

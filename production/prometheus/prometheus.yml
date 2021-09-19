@@ -19,8 +19,9 @@ scrape_configs:
       - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
         regex: .+
         action: keep
-      - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
-        target_label: job
+      # # Renmoved because I decided I don't care.
+      # - source_labels: [__meta_dockerswarm_service_label_prometheus_job]
+      #   target_label: job
 
 
 

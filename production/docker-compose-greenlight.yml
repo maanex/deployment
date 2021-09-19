@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  bot:
+    image: ghcr.io/maanex/greenlight:master
+    secrets:
+      - GREENLIGHT_DBOT_TOKEN
+      - GREENLIGHT_DBOT_ID
+      - GREENLIGHT_DBOT_PUBKEY
+      - GREENLIGHT_MONGO_URL
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+secrets:
+  GREENLIGHT_DBOT_TOKEN:
+    external: true
+  GREENLIGHT_DBOT_ID:
+    external: true
+  GREENLIGHT_DBOT_PUBKEY:
+    external: true
+  GREENLIGHT_MONGO_URL:
+    external: true

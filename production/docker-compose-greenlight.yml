@@ -8,6 +8,8 @@ services:
       - GREENLIGHT_DBOT_ID
       - GREENLIGHT_DBOT_PUBKEY
       - GREENLIGHT_MONGO_URL
+    ports:
+      - 5008:80
     deploy:
       placement:
         constraints:

@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  bot:
+  greenlight:
     image: ghcr.io/maanex/greenlight:master
     secrets:
       - GREENLIGHT_DBOT_TOKEN
@@ -18,6 +18,28 @@ services:
         parallelism: 1
         delay: 10s
 
+  wumpum:
+    image: ghcr.io/maanex/wumpum:master
+    environment:
+      WUMPUM_TRACK_INDIVIDUAL: "true"
+    networks:
+      - metrics
+    secrets:
+      - WUMPUM_DBOT_TOKEN
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - prometheus-job=wumpum
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+networks:
+  metrics:
+    external: true
+
 secrets:
   GREENLIGHT_DBOT_TOKEN:
     external: true
@@ -26,4 +48,6 @@ secrets:
   GREENLIGHT_DBOT_PUBKEY:
     external: true
   GREENLIGHT_MONGO_URL:
+    external: true
+  WUMPUM_DBOT_TOKEN:
     external: true

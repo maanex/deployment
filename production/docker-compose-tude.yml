@@ -5,6 +5,8 @@ services:
     image: ghcr.io/maanex/tudebot4:master
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      NODE_ENV: "production"
     networks:
       - logging
       - metrics

@@ -18,23 +18,23 @@ services:
         parallelism: 1
         delay: 10s
 
-  wumpum:
-    image: ghcr.io/maanex/wumpum:master
-    environment:
-      WUMPUM_TRACK_INDIVIDUAL: "true"
-    networks:
-      - metrics
-    secrets:
-      - WUMPUM_DBOT_TOKEN
-    deploy:
-      placement:
-        constraints:
-          - node.role == manager
-      labels:
-        - prometheus-job=wumpum
-      update_config:
-        parallelism: 1
-        delay: 10s
+  # wumpum:
+  #   image: ghcr.io/maanex/wumpum:master
+  #   environment:
+  #     WUMPUM_TRACK_INDIVIDUAL: "true"
+  #   networks:
+  #     - metrics
+  #   secrets:
+  #     - WUMPUM_DBOT_TOKEN
+  #   deploy:
+  #     placement:
+  #       constraints:
+  #         - node.role == manager
+  #     labels:
+  #       - prometheus-job=wumpum
+  #     update_config:
+  #       parallelism: 1
+  #       delay: 10s
 
 networks:
   metrics:

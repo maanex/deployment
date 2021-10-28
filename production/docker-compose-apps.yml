@@ -18,8 +18,9 @@ services:
       - FSM_SERVERAUTH_PRIVATE_KEY
       - FSM_AUDITLOG_WEBHOOK
       - FSM_MONGO_URL
+      - FSM_APIAPP_ID
+      - FSM_APIAPP_SECRET
       - FSM_HELPER_ID
-      - FSM_HELPER_SECRET
       - FSM_HELPER_TOKEN
       - FSM_DBLSTATS_TOKEN
       - FSM_TOPGG_TOKEN
@@ -54,9 +55,11 @@ secrets:
     external: true
   FSM_MONGO_URL:
     external: true
-  FSM_HELPER_ID:
+  FSM_APIAPP_ID:
     external: true
-  FSM_HELPER_SECRET:
+  FSM_APIAPP_SECRET:
+    external: true
+  FSM_HELPER_ID:
     external: true
   FSM_HELPER_TOKEN:
     external: true

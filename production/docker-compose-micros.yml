@@ -1,39 +1,17 @@
 version: "3.3"
 
 services:
-  # lumberer:
-  #   image: maanex/lumberer:latest
-  #   volumes:
-  #     - logfiles:/storage
-  #   environment:
-  #     STORAGE_PATH: "/storage"
-  #   networks:
-  #     - logging
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.role == manager
-
-  # thumbnailer:
-  #   image: maanex/thumbnailer:latest
-  #   environment:
-  #     FREESTUFF_KEY: "verysecret"
-  #     METRICS_AUTH: "yikes"
-  #   networks:
-  #     - traefik-public
-  #   ports:
-  #     - 9915:9915 # TODO remove with traefik
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.role == manager
-  #     labels:
-  #       - traefik.enable=true
-  #       - traefik.docker.network=traefik-public
-  #       - traefik.http.services.thumbnailer.loadbalancer.server.port=9915
-  #       - traefik.http.routers.thumbnailer.entrypoints=https
-  #       - traefik.http.routers.thumbnailer.rule=Host(`thumbnails.freestuffbot.xyz`)
-  #       - traefik.http.routers.thumbnailer.tls.certresolver=letsencrypt
+  thumbnailer:
+    image: maanex/thumbnailer:latest
+    environment:
+      METRICS_AUTH: ""
+    networks:
+      - fsm-micros
+      - metrics
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
   
   gaexporter:
     image: ghcr.io/maanex/googleanalytics_exporter:master
@@ -56,9 +34,7 @@ services:
           - node.role == manager
 
 networks:
-  traefik-public:
-    external: true
-  logging:
+  fsm-micros:
     external: true
   metrics:
     external: true

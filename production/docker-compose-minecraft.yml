@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    environment:
+      EULA: "TRUE"
+      TYPE: "SPIGOT"
+      VERSION: "1.18"
+      MEMORY: "6G"
+    ports:
+      - 25565:25565
+      - 80:80
+    volumes:
+      - /root/data:/data
+    tty: true
+    stdin_open: true
+    # restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == mc

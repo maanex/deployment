@@ -24,7 +24,6 @@ services:
       - /root/data:/data
     tty: true
     stdin_open: true
-    # restart: always
     deploy:
       mode: replicated
       replicas: 1

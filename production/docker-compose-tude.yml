@@ -7,6 +7,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       NODE_ENV: "production"
+      TUDEBOT_GIBU_PIPELINE_ENDPOINT: "http://gibu_api_pipeline/execute"
     networks:
       - logging
       - metrics
@@ -19,7 +20,6 @@ services:
       - TUDEBOT_GOOGLE_KEY
       - TUDEBOT_KSOFT_TOKEN
       - TUDEBOT_ALEXA_KEY
-      - TUDEBOT_GIBU_ENDPOINT
     deploy:
       labels:
         - prometheus-job=tudebot
@@ -52,6 +52,4 @@ secrets:
   TUDEBOT_KSOFT_TOKEN:
     external: true
   TUDEBOT_ALEXA_KEY:
-    external: true
-  TUDEBOT_GIBU_ENDPOINT:
     external: true

@@ -17,6 +17,22 @@ services:
         parallelism: 1
         delay: 10s
 
+  api_pipeline:
+    image: ghcr.io/maanex-gibu/api_pipeline:master
+    environment:
+      - PORT=80
+    networks:
+      - gibu
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == coyote
+      update_config:
+        parallelism: 1
+        delay: 10s
+
 networks:
   gibu:
     external: true

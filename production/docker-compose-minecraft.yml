@@ -6,7 +6,7 @@ services:
     environment:
       EULA: "TRUE"
       TYPE: "SPIGOT"
-      VERSION: "1.18"
+      VERSION: "1.18.2"
       MEMORY: "4G"
     ports:
       - target: 25565

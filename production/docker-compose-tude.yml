@@ -11,6 +11,7 @@ services:
     networks:
       - logging
       - metrics
+      - gibu
     secrets:
       - TUDEBOT_DBOT_TOKEN
       - TUDEBOT_DBOT_ID
@@ -34,6 +35,8 @@ networks:
   logging:
     external: true
   metrics:
+    external: true
+  gibu:
     external: true
 
 secrets:

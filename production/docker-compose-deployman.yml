@@ -11,8 +11,6 @@ services:
       - DEPLOYMAN_DISCORD_CLIENT_ID="961357255817707540"
       - DEPLOYMAN_DISCORD_PUBIC_KEY="d0a4ab69ac4248100d932139d984e68e6cacb694a5c57b83a4835ee71691176c"
       - DEPLOYMAN_PRODUCT_CONFIG_PATH="/data/productconfig.yaml"
-    networks:
-      - gibu
     ports:
       - 3089:3089
     secrets:

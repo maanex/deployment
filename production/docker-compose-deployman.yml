@@ -16,10 +16,7 @@ services:
     ports:
       - 3089:3089
     secrets:
-      - DEPLOYMAN_DISCORD_CLIENT_ID
-      - DEPLOYMAN_DISCORD_PUBIC_KEY
       - DEPLOYMAN_DISCORD_BOT_TOKEN
-      - DEPLOYMAN_PRODUCT_CONFIG_PATH
       - DEPLOYMAN_REGISTRY_AUTH
       - DEPLOYMAN_GITHUB_WEBHOOK_SECRET
     deploy:
@@ -33,13 +30,7 @@ services:
         delay: 10s
 
 secrets:
-  DEPLOYMAN_DISCORD_CLIENT_ID:
-    external: true
-  DEPLOYMAN_DISCORD_PUBIC_KEY:
-    external: true
   DEPLOYMAN_DISCORD_BOT_TOKEN:
-    external: true
-  DEPLOYMAN_PRODUCT_CONFIG_PATH:
     external: true
   DEPLOYMAN_REGISTRY_AUTH:
     external: true

@@ -1,0 +1,43 @@
+version: "3.3"
+
+services:
+  api_games:
+    image: ghcr.io/maanex/deployman:master
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DEPLOYMAN_PORT=3089
+    networks:
+      - gibu
+    ports:
+      - 3089:3089
+    secrets:
+      - DEPLOYMAN_DISCORD_CLIENT_ID
+      - DEPLOYMAN_DISCORD_PUBIC_KEY
+      - DEPLOYMAN_DISCORD_BOT_TOKEN
+      - DEPLOYMAN_PRODUCT_CONFIG_PATH
+      - DEPLOYMAN_REGISTRY_AUTH
+      - DEPLOYMAN_GITHUB_WEBHOOK_SECRET
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == coyote
+      update_config:
+        parallelism: 1
+        delay: 10s
+
+secrets:
+  DEPLOYMAN_DISCORD_CLIENT_ID:
+    external: true
+  DEPLOYMAN_DISCORD_PUBIC_KEY:
+    external: true
+  DEPLOYMAN_DISCORD_BOT_TOKEN:
+    external: true
+  DEPLOYMAN_PRODUCT_CONFIG_PATH:
+    external: true
+  DEPLOYMAN_REGISTRY_AUTH:
+    external: true
+  DEPLOYMAN_GITHUB_WEBHOOK_SECRET:
+    external: true

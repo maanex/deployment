@@ -46,12 +46,11 @@ services:
       labels:
         traefik.enable: "true"
         traefik.docker.network: proxy
-        # traefik.http.services.traefik-api.loadbalancer.server.port: 8080
+        traefik.http.services.traefik-api.loadbalancer.server.port: 8080
+        traefik.http.routers.traefik-api.service: api@internal
         traefik.http.routers.traefik-api.rule: Host(`traefik-net.maanex.me`)
         # traefik.http.routers.traefik-api.entrypoints: https
-        traefik.http.routers.traefik-api.service: api@internal
         traefik.http.routers.traefik-api.tls: "true"
-        # traefik.http.routers.traefik-api.tls.certresolver: letsencrypt
         traefik.http.routers.traefik-api.tls.certresolver: cloudflare
         traefik.http.routers.traefik-api.tls.domains[0].main: traefik-net.maanex.me
         # traefik.http.routers.traefik-api.tls.domains[0].main: freestuffbot.xyz
@@ -63,14 +62,14 @@ services:
     image: traefik/whoami
     restart: always
     networks:
-       - proxy
+      - proxy
     labels:
       traefik.enable: "true"
       traefik.docker.network: proxy
-      traefik.http.routers.whoami.rule: Host(`whoami.mensatt.de`)
+      traefik.http.routers.whoami.rule: Host(`whoami-net.maanex.me`)
       traefik.http.routers.whoami.tls: "true"
       traefik.http.routers.whoami.tls.certresolver: cloudflare
-      traefik.http.routers.whoami.tls.domains[0].main: whoami.mensatt.de
+      traefik.http.routers.whoami.tls.domains[0].main: whoami-net.maanex.me
 
 
 networks:

@@ -60,6 +60,8 @@ services:
   whoami:
     image: traefik/whoami
     restart: always
+    ports:
+      - 80:80
     networks:
       - proxy
     labels:

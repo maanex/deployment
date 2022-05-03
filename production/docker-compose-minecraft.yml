@@ -18,7 +18,7 @@ services:
         protocol: udp
         mode: host
       - target: 80
-        published: 80
+        published: 8083
         mode: host
     volumes:
       - /root/data:/data

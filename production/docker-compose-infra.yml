@@ -30,9 +30,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik-public-certificates:/certificates
+    secrets:
+      - CF_API_EMAIL
+      - CF_API_KEY
     environment:
-      CF_DNS_API_TOKEN_FILE: /run/secrets/cf-api-token
-      CF_ZONE_API_TOKEN_FILE: /run/secrets/cf-api-token
+      CLOUDFLARE_EMAIL: /run/secrets/CF_API_EMAIL
+      CLOUDFLARE_API_KEY: /run/secrets/CF_API_KEY
     deploy:
       mode: global
       placement:
@@ -73,6 +76,12 @@ networks:
   traefik-public:
     external: true
   redis:
+    external: true
+
+secrets:
+  CF_API_EMAIL:
+    external: true
+  CF_API_KEY:
     external: true
 
 volumes:

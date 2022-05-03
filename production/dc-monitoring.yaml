@@ -34,7 +34,7 @@ services:
     env_file:
       - /root/services/deployment/production/grafana/config.monitoring
     networks:
-      - traefik-public
+      - proxy
       - metrics
     ports:
       - 9919:3000
@@ -52,7 +52,7 @@ services:
 
 
 networks:
-  traefik-public:
+  proxy:
     external: true
   redis:
     external: true

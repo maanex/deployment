@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   traefik:
-    image: traefik:2.2
+    image: traefik:2.6
     command:
       # - --api.insecure
       - --api.dashboard
@@ -23,7 +23,7 @@ services:
       - --metrics.prometheus
       - --metrics.prometheus.entryPoint=metrics
     networks:
-      - traefik-public
+      - proxy
     ports:
       - 80:80     # web main
       # - 443:443     # https
@@ -31,13 +31,14 @@ services:
       - 8082:8082 # traefik metrics
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/traefik.yml:/traefik.yml:ro
       - traefik-public-certificates:/certificates
     secrets:
-      - CF_API_EMAIL
-      - CF_API_KEY
+      - CF_DNS_API_TOKEN
     environment:
-      CLOUDFLARE_EMAIL: /run/secrets/CF_API_EMAIL
-      CLOUDFLARE_API_KEY: /run/secrets/CF_API_KEY
+      CF_DNS_API_TOKEN_FILE: /run/secrets/CF_DNS_API_TOKEN
+      PUID: 1002
+      PGID: 1002
     deploy:
       mode: global
       placement:
@@ -47,30 +48,43 @@ services:
         parallelism: 1
         delay: 10s
       restart_policy:
-        condition: on-failure
+        condition: always
       labels:
-        - traefik.enable
-        - traefik.docker.network=traefik-public
-        - traefik.http.services.traefik-api.loadbalancer.server.port=8080
-        - traefik.http.routers.traefik-api.rule=Host(`traefik-net.maanex.me`)
-        - traefik.http.routers.traefik-api.entrypoints=https
-        - traefik.http.routers.traefik-api.tls
-        - traefik.http.routers.traefik-api.service=api@internal
-        - traefik.http.routers.traefik-api.tls.certresolver=letsencrypt
-        - traefik.http.routers.traefik-api.tls.domains[0].main=freestuffbot.xyz
-        - traefik.http.routers.traefik-api.tls.domains[0].sans=*.freestuffbot.xyz
-        - traefik.http.routers.traefik-api.tls.domains[1].main=maanex.me
-        - traefik.http.routers.traefik-api.tls.domains[1].sans=*.maanex.me
+        traefik.enable: true
+        traefik.docker.network: proxy
+        # traefik.http.services.traefik-api.loadbalancer.server.port: 8080
+        traefik.http.routers.traefik-api.rule: Host(`traefik-net.maanex.me`)
+        # traefik.http.routers.traefik-api.entrypoints: https
+        traefik.http.routers.traefik-api.service: api@internal
+        traefik.http.routers.traefik-api.tls: true
+        # traefik.http.routers.traefik-api.tls.certresolver: letsencrypt
+        traefik.http.routers.traefik-api.tls.certresolver: cloudflare
+        traefik.http.routers.traefik-api.tls.domains[0].main: traefik-net.maanex.me
+        # traefik.http.routers.traefik-api.tls.domains[0].main: freestuffbot.xyz
+        # traefik.http.routers.traefik-api.tls.domains[0].sans: "*.freestuffbot.xyz"
+        # traefik.http.routers.traefik-api.tls.domains[1].main: maanex.me
+        # traefik.http.routers.traefik-api.tls.domains[1].sans: "*.maanex.me"
+
+  whoami:
+    image: traefik/whoami
+    restart: always
+    networks:
+       - proxy
+    labels:
+      traefik.enable: true
+      traefik.docker.network: proxy
+      traefik.http.routers.whoami.rule: Host(`whoami.mensatt.de`)
+      traefik.http.routers.whoami.tls: true
+      traefik.http.routers.whoami.tls.certresolver: cloudflare
+      traefik.http.routers.whoami.tls.domains[0].main: whoami.mensatt.de
 
 
 networks:
-  traefik-public:
+  proxy:
     external: true
 
 secrets:
-  CF_API_EMAIL:
-    external: true
-  CF_API_KEY:
+  CF_DNS_API_TOKEN:
     external: true
 
 volumes:

@@ -15,7 +15,7 @@ services:
       retries: 3
     networks:
       - net
-      - traefik-public
+      - proxy
     ports:
       - 2082:8080
     deploy:
@@ -29,13 +29,13 @@ services:
       placement:
         constraints:
           - node.role == manager
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=traefik-public
-        - traefik.http.services.swarmpit.loadbalancer.server.port=8080
-        - traefik.http.routers.swarmpit.entrypoints=https
-        - traefik.http.routers.swarmpit.rule=Host(`cluster-net.maanex.me`)
-        - traefik.http.routers.swarmpit.tls.certresolver=letsencrypt
+      # labels:
+      #   - traefik.enable=true
+      #   - traefik.docker.network=proxy
+      #   - traefik.http.services.swarmpit.loadbalancer.server.port=8080
+      #   - traefik.http.routers.swarmpit.entrypoints=https
+      #   - traefik.http.routers.swarmpit.rule=Host(`cluster-net.maanex.me`)
+      #   - traefik.http.routers.swarmpit.tls.certresolver=letsencrypt
 
   db:
     image: couchdb:2.3.0
@@ -91,7 +91,7 @@ networks:
   net:
     driver: overlay
     attachable: true
-  traefik-public:
+  proxy:
     external: true
 
 volumes:

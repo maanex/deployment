@@ -8,7 +8,7 @@ services:
       FSM_HELPER_ID: "855181940784627712"
       NODE_ENV: "production"
     networks:
-      - traefik-public
+      - proxy
       - logging
       - fsm-micros
       - fsm-sockets
@@ -31,15 +31,15 @@ services:
       placement:
         constraints:
           - node.role == manager
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=traefik-public
-        - traefik.http.routers.manager.entrypoints=https
-        - traefik.http.routers.manager.rule=Host(`api.freestuffbot.xyz`)
-        - traefik.http.services.manager.loadbalancer.server.port=9002
+      # labels:
+      #   - traefik.enable=true
+      #   - traefik.docker.network=proxy
+      #   - traefik.http.routers.manager.entrypoints=https
+      #   - traefik.http.routers.manager.rule=Host(`api.freestuffbot.xyz`)
+      #   - traefik.http.services.manager.loadbalancer.server.port=9002
 
 networks:
-  traefik-public:
+  proxy:
     external: true
   logging:
     external: true

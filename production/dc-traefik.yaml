@@ -69,7 +69,6 @@ services:
       traefik.enable: true
       traefik.docker.network: proxy
       traefik.http.routers.whoami.rule: Host(`whoami.mensatt.de`)
-      traefik.http.routers.whoami.tls: true
       traefik.http.routers.whoami.tls.certresolver: cloudflare
       traefik.http.routers.whoami.tls.domains[0].main: whoami.mensatt.de
 

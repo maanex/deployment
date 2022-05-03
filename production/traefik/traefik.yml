@@ -1,0 +1,61 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+# ---
+api:
+ debug: true
+ dashboard: true
+ insecure: false
+
+serversTransport:
+  insecureSkipVerify: true
+
+# Entry Point Configuration
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    # address: ":443"
+    address: ":2053"
+  metrics:
+    address: ":8082"
+
+# SSL Certificates
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: team@freestuffbot.xyz
+      storage: /certificates/acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "1.0.0.1:53" 
+
+# (Optional) Overwrite Default Certificates
+# tls:
+#   stores:
+#     default:
+#       defaultCertificate:
+#         certFile: /etc/traefik/certs/cert.pem
+#         keyFile: /etc/traefik/certs/cert-key.pem
+# (Optional) Disable TLS version 1.0 and 1.1
+#   options:
+#     default:
+#       minVersion: VersionTLS12
+
+providers:
+  docker:
+    swarmMode: true
+    exposedByDefault: false
+
+# metrics
+metrics:
+  prometheus:
+    entryPoint=metrics

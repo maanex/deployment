@@ -3,6 +3,7 @@ echo ":: Creating public network"
 docker network create --driver=overlay traefik-public
 docker network create --driver=overlay logging
 docker network create --driver=overlay redis
+docker network create --driver=overlay rabbits
 docker network create --driver=overlay fsm-sockets
 docker network create --driver=overlay fsm-micros
 docker network create --driver=overlay metrics

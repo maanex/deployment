@@ -43,8 +43,6 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-      restart_policy:
-        condition: always
       labels:
         traefik.enable: "true"
         traefik.docker.network: proxy

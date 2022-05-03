@@ -4,9 +4,9 @@ global:
 
 # ---
 api:
- debug: true
- dashboard: true
- insecure: false
+  debug: true
+  dashboard: true
+  insecure: false
 
 serversTransport:
   insecureSkipVerify: true
@@ -58,4 +58,4 @@ providers:
 # metrics
 metrics:
   prometheus:
-    entryPoint=metrics
+    entryPoint: metrics

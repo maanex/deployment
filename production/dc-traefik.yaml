@@ -5,23 +5,19 @@ services:
     image: traefik:2.6
     command:
       # - --api.insecure
-      - --api.dashboard
-      - --providers.docker=true
-      - --providers.docker.swarmmode=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.metrics.address=:8082
-      - --entrypoints.http.address=:80
+      # - --api.dashboard
+      # - --providers.docker=true
+      # - --providers.docker.swarmmode=true
+      # - --providers.docker.exposedbydefault=false
+      # - --entrypoints.metrics.address=:8082
+      # - --entrypoints.http.address=:80
       # - --entrypoints.https.address=:443
-      - --entrypoints.https.address=:2053
+      # - --entrypoints.https.address=:2053
       #* for cloudflare proxy
-      - --entrypoints.https.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/12,172.64.0.0/13,131.0.72.0/22
-      - --certificatesresolvers.letsencrypt.acme.email=team@freestuffbot.xyz
-      - --certificatesresolvers.letsencrypt.acme.storage=/certificates/acme.json
-      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
-      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      # - --entrypoints.https.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/12,172.64.0.0/13,131.0.72.0/22
       # - --certificatesresolvers.letsencrypt.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
-      - --metrics.prometheus
-      - --metrics.prometheus.entryPoint=metrics
+      # - --metrics.prometheus
+      # - --metrics.prometheus.entryPoint=metrics
     networks:
       - proxy
     ports:

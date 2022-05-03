@@ -13,14 +13,14 @@ serversTransport:
 
 # Entry Point Configuration
 entryPoints:
-  web:
+  http:
     address: ":80"
     http:
       redirections:
         entryPoint:
-          to: websecure
+          to: https
           scheme: https
-  websecure:
+  https:
     # address: ":443"
     address: ":2053"
   metrics:

@@ -18,6 +18,7 @@ services:
       - redis
       - rabbits
       - metrics
+      - proxy
     secrets:
       - FSB_API_MONGO_URL
       - FSB_API_OAUTH_DISCORD_APPID
@@ -33,7 +34,6 @@ services:
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
-        - traefik.http.services.fsb-api.loadbalancer.server.port=80
         - traefik.http.routers.fsb-api.entrypoints=https
         - traefik.http.routers.fsb-api.rule=Host(`api.freestuffbot.xyz`)
         - traefik.http.routers.fsb-api.tls.certresolver=cloudflare
@@ -45,6 +45,8 @@ networks:
   rabbits:
     external: true
   metrics:
+    external: true
+  proxy:
     external: true
 
 secrets:

@@ -34,6 +34,7 @@ services:
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
+        - traefik.http.services.fsb-api.loadbalancer.server.port=80
         - traefik.http.routers.fsb-api.entrypoints=https
         - traefik.http.routers.fsb-api.rule=Host(`api.freestuffbot.xyz`)
         - traefik.http.routers.fsb-api.tls.certresolver=cloudflare

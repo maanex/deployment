@@ -16,7 +16,7 @@ services:
       FSB_API_PRIVATE_KEY_URI: "/run/secrets/FSB_API_PRIVATE_KEY"
     networks:
       - redis
-      - rabbit
+      - rabbits
       - metrics
     secrets:
       - FSB_API_MONGO_URL
@@ -42,7 +42,7 @@ services:
 networks:
   redis:
     external: true
-  rabbit:
+  rabbits:
     external: true
   metrics:
     external: true

@@ -17,7 +17,6 @@ services:
     networks:
       - redis
       - rabbit
-      - fsm-sockets
       - metrics
     secrets:
       - FSB_API_MONGO_URL
@@ -44,8 +43,6 @@ networks:
   redis:
     external: true
   rabbit:
-    external: true
-  fsm-sockets:
     external: true
   metrics:
     external: true

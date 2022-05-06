@@ -21,6 +21,7 @@ services:
       - rabbits
       - metrics
       - proxy
+      - gibu
     secrets:
       - FSB_API_MONGO_URL
       - FSB_API_OAUTH_DISCORD_APPID
@@ -50,6 +51,8 @@ networks:
   metrics:
     external: true
   proxy:
+    external: true
+  gibu:
     external: true
 
 secrets:

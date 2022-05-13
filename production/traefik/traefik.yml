@@ -21,8 +21,8 @@ entryPoints:
           to: https
           scheme: https
   https:
-    # address: ":443"
-    address: ":2053"
+    address: ":443"
+    # address: ":2053"
   metrics:
     address: ":8082"
 

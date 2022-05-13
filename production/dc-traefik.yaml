@@ -3,27 +3,12 @@ version: "3.3"
 services:
   traefik:
     image: traefik:2.6
-    # command:
-      # - --api.insecure
-      # - --api.dashboard
-      # - --providers.docker=true
-      # - --providers.docker.swarmmode=true
-      # - --providers.docker.exposedbydefault=false
-      # - --entrypoints.metrics.address=:8082
-      # - --entrypoints.http.address=:80
-      # - --entrypoints.https.address=:443
-      # - --entrypoints.https.address=:2053
-      #* for cloudflare proxy
-      # - --entrypoints.https.forwardedHeaders.trustedIPs=173.245.48.0/20,103.21.244.0/22,103.22.200.0/22,103.31.4.0/22,141.101.64.0/18,108.162.192.0/18,190.93.240.0/20,188.114.96.0/20,197.234.240.0/22,198.41.128.0/17,162.158.0.0/15,104.16.0.0/12,172.64.0.0/13,131.0.72.0/22
-      # - --certificatesresolvers.letsencrypt.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
-      # - --metrics.prometheus
-      # - --metrics.prometheus.entryPoint=metrics
     networks:
       - proxy
     ports:
       - 80:80     # web main
-      # - 443:443     # https
-      - 2053:2053     # https
+      - 443:443     # https
+      # - 2053:2053     # https
       - 8082:8082 # traefik metrics
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -49,13 +34,9 @@ services:
         traefik.http.services.traefik-api.loadbalancer.server.port: 8080
         traefik.http.routers.traefik-api.service: api@internal
         traefik.http.routers.traefik-api.entrypoints: https
-        traefik.http.routers.traefik-api.rule: Host(`traefik-net.maanex.me`)
+        traefik.http.routers.traefik-api.rule: Host(`traefik-coyote.tude.network`)
         traefik.http.routers.traefik-api.tls.certresolver: cloudflare
-        traefik.http.routers.traefik-api.tls.domains[0].main: traefik-net.maanex.me
-        # traefik.http.routers.traefik-api.tls.domains[0].main: freestuffbot.xyz
-        # traefik.http.routers.traefik-api.tls.domains[0].sans: "*.freestuffbot.xyz"
-        # traefik.http.routers.traefik-api.tls.domains[1].main: maanex.me
-        # traefik.http.routers.traefik-api.tls.domains[1].sans: "*.maanex.me"
+        traefik.http.routers.traefik-api.tls.domains[0].main: traefik-coyote.tude.network
 
   whoami:
     image: traefik/whoami
@@ -72,9 +53,9 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.whoami.loadbalancer.server.port=80
         - traefik.http.routers.whoami.entrypoints=https
-        - traefik.http.routers.whoami.rule=Host(`whoami-net.maanex.me`)
+        - traefik.http.routers.whoami.rule=Host(`whoami.tude.network`)
         - traefik.http.routers.whoami.tls.certresolver=cloudflare
-        - traefik.http.routers.whoami.tls.domains[0].main=whoami-net.maanex.me
+        - traefik.http.routers.whoami.tls.domains[0].main=whoami.tude.network
 
 
 networks:

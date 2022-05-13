@@ -8,7 +8,10 @@ services:
     environment:
       NODE_ENV: "production"
       TUDEBOT_GIBU_PIPELINE_ENDPOINT: "http://gibu_api_pipeline/execute"
+      TUDEBOT_VAULT_PUBLIC_KEY_PATH: "/run/secrets/TUDEBOT_VAULT_PUBLIC_KEY"
+      TUDEBOT_VAULT_PRIVATE_KEY_PATH: "/run/secrets/TUDEBOT_VAULT_PRIVATE_KEY"
     networks:
+      - proxy
       - logging
       - metrics
       - gibu
@@ -21,17 +24,28 @@ services:
       - TUDEBOT_GOOGLE_KEY
       - TUDEBOT_KSOFT_TOKEN
       - TUDEBOT_ALEXA_KEY
+      - TUDEBOT_VAULT_PUBLIC_KEY
+      - TUDEBOT_VAULT_PRIVATE_KEY
     deploy:
-      labels:
-        - prometheus-job=tudebot
       placement:
         constraints:
           - node.role == manager
       update_config:
         parallelism: 1
         delay: 10s
+      labels:
+        - prometheus-job=tudebot
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.tudebot.loadbalancer.server.port=80
+        - traefik.http.routers.tudebot.entrypoints=https
+        - traefik.http.routers.tudebot.rule=Host(`tudebot.tude.network`)
+        - traefik.http.routers.tudebot.tls.certresolver=cloudflare
+        - traefik.http.routers.tudebot.tls.domains[0].main=tudebot.tude.network
 
 networks:
+  proxy:
+    external: true
   logging:
     external: true
   metrics:
@@ -55,4 +69,8 @@ secrets:
   TUDEBOT_KSOFT_TOKEN:
     external: true
   TUDEBOT_ALEXA_KEY:
+    external: true
+  TUDEBOT_VAULT_PUBLIC_KEY:
+    external: true
+  TUDEBOT_VAULT_PRIVATE_KEY:
     external: true

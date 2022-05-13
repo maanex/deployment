@@ -22,6 +22,8 @@ services:
         mode: host
     volumes:
       - /root/data:/data
+    networks:
+      - proxy
     tty: true
     stdin_open: true
     deploy:
@@ -37,3 +39,16 @@ services:
       placement:
         constraints:
           - node.hostname == mc
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.mcweb.loadbalancer.server.port=80
+        - traefik.http.routers.mcweb.entrypoints=https
+        - traefik.http.routers.mcweb.rule=Host(`minecraft.tude.club`)
+        - traefik.http.routers.mcweb.tls.certresolver=cloudflare
+        - traefik.http.routers.mcweb.tls.domains[0].main=minecraft.tude.club
+
+
+networks:
+  proxy:
+    external: true

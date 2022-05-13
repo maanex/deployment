@@ -12,8 +12,6 @@ services:
       - logging
       - fsm-micros
       - fsm-sockets
-    ports:
-      - 9002:9002 # TODO remove with traefik
     secrets:
       - FSM_THUMBNAILER_PRIVATE_KEY
       - FSM_SERVERAUTH_PRIVATE_KEY
@@ -31,12 +29,15 @@ services:
       placement:
         constraints:
           - node.role == manager
-      # labels:
-      #   - traefik.enable=true
-      #   - traefik.docker.network=proxy
-      #   - traefik.http.routers.manager.entrypoints=https
-      #   - traefik.http.routers.manager.rule=Host(`api.freestuffbot.xyz`)
-      #   - traefik.http.services.manager.loadbalancer.server.port=9002
+      labels:
+        - prometheus-job=fsb
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.fsb-manager.loadbalancer.server.port=9002
+        - traefik.http.routers.fsb-manager.entrypoints=https
+        - traefik.http.routers.fsb-manager.rule=Host(`api.freestuffbot.xyz`)
+        - traefik.http.routers.fsb-manager.tls.certresolver=cloudflare
+        - traefik.http.routers.fsb-manager.tls.domains[0].main=api.freestuffbot.xyz
 
 networks:
   proxy:

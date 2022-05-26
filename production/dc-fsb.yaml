@@ -90,7 +90,8 @@ services:
       mode: global
       placement:
         constraints:
-          - node.hostname != coyote # reserve coyote ip address for discord_gateway service
+          # - node.hostname != coyote # reserve coyote ip address for discord_gateway service
+          - node.hostname == coyote # reserve coyote ip address for discord_gateway service
       update_config:
         parallelism: 1
         delay: 30s

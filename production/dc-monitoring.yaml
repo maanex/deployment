@@ -13,9 +13,6 @@ services:
       - '--storage.tsdb.path=/prometheus'
     networks:
       - metrics
-    environment:
-      PUID: 1002
-      PGID: 1002
     deploy:
       placement:
         constraints:
@@ -33,8 +30,6 @@ services:
     networks:
       - proxy
       - metrics
-    # ports:
-    #   - 9919:3000
     deploy:
       placement:
         constraints:

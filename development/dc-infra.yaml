@@ -1,0 +1,34 @@
+version: "3.3"
+
+services:
+  redis:
+    image: redis
+    volumes:
+      - redis-data:/var/lib/redis
+    networks:
+      - redis
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  rabbit:
+    image: rabbitmq:3.8
+    networks:
+      - rabbits
+    ports:
+      - 5672:5672 # DHDHDHHDHDHDHDHDHH DO NOT COPY TO PROD
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+
+networks:
+  redis:
+    external: true
+  rabbits:
+    external: true
+
+volumes:
+  redis-data: {}

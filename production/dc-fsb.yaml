@@ -48,6 +48,8 @@ services:
 
   manager:
     image: ghcr.io/freestuffbot/fsb-manager:master
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       NODE_ENV: "production"
       FSB_MANAGER_PORT: "80"

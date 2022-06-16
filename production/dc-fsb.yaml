@@ -37,6 +37,8 @@ services:
         parallelism: 1
         delay: 30s
       labels:
+        - xyz.freestuffbot.service.role=api
+        - xyz.freestuffbot.service.network=fsn_core
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -68,6 +70,8 @@ services:
         parallelism: 1
         delay: 30s
       labels:
+        - xyz.freestuffbot.service.role=manager
+        - xyz.freestuffbot.service.network=fsn_core
         - prometheus-job=fsb
 
   discord_interactions:
@@ -98,6 +102,8 @@ services:
         parallelism: 1
         delay: 30s
       labels:
+        - xyz.freestuffbot.service.role=discord_interactions
+        - xyz.freestuffbot.service.network=fsn_discord
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -129,6 +135,8 @@ services:
         parallelism: 1
         delay: 30s
       labels:
+        - xyz.freestuffbot.service.role=discord_gateway
+        - xyz.freestuffbot.service.network=fsn_discord
         - prometheus-job=fsb
 
 networks:

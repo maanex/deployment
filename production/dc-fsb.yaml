@@ -60,6 +60,9 @@ services:
       - FSB_MANAGER_MONGO_URL
     deploy:
       mode: replicated
+      placement:
+        constraints:
+          - node.hostname == coyote
       replicas: 1
       update_config:
         parallelism: 1
@@ -117,7 +120,8 @@ services:
       - FSB_DISCORD_GATEWAY_API_TOKEN
       - FSB_DISCORD_GATEWAY_API_USER
     deploy:
-      mode: global
+      mode: replicated
+      replicas: 1
       placement:
         constraints:
           - node.hostname == coyote

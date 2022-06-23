@@ -176,6 +176,27 @@ services:
       labels:
         - prometheus-job=fsb
 
+  link_proxy:
+    image: ghcr.io/freestuffbot/fsb-link-proxy:master
+    environment:
+      NODE_ENV: "production"
+      FSB_LINK_PROXY_PORT: "80"
+    networks:
+      - metrics
+      - fsn_tools
+    secrets:
+      - FSB_LINK_PROXY_MONGO_URL
+      - FSB_LINK_PROXY_FIREBASE_API_KEY
+      - FSB_LINK_PROXY_FIREBASE_SERVICE_ACCOUNT_KEY
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 30s
+      labels:
+        - prometheus-job=fsb
+
 networks:
   # access to "external" services
   redis:
@@ -228,4 +249,11 @@ secrets:
     external: true
   # THUMBNAILER
   FSB_THUMBNAILER_DISCORD_TOKEN:
+    external: true
+  # LINK PROXY
+  FSB_LINK_PROXY_MONGO_URL:
+    external: true
+  FSB_LINK_PROXY_FIREBASE_API_KEY:
+    external: true
+  FSB_LINK_PROXY_FIREBASE_SERVICE_ACCOUNT_KEY:
     external: true

@@ -156,6 +156,26 @@ services:
       labels:
         - prometheus-job=fsb
 
+  thumbnailer:
+    image: ghcr.io/freestuffbot/fsb-thumbnailer:master
+    environment:
+      NODE_ENV: "production"
+      FSB_THUMBNAILER_PORT: "80"
+      FSB_THUMBNAILER_DISCORD_CDN_CHANNEL: "885829282952278038"
+    networks:
+      - metrics
+      - fsn_tools
+    secrets:
+      - FSB_THUMBNAILER_DISCORD_TOKEN
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 30s
+      labels:
+        - prometheus-job=fsb
+
 networks:
   # access to "external" services
   redis:
@@ -205,4 +225,7 @@ secrets:
   FSB_DISCORD_PUBLISHER_MONGO_URL:
     external: true
   FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY:
+    external: true
+  # THUMBNAILER
+  FSB_THUMBNAILER_DISCORD_TOKEN:
     external: true

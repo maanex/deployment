@@ -25,6 +25,7 @@ services:
       - gibu
       - fsn_core
       - fsn_discord
+      - fsn_publisher
     secrets:
       - FSB_API_MONGO_URL
       - FSB_API_OAUTH_DISCORD_APPID

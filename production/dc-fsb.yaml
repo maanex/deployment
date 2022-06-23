@@ -37,8 +37,6 @@ services:
         parallelism: 1
         delay: 30s
       labels:
-        - xyz.freestuffbot.service.role=api
-        - xyz.freestuffbot.service.network=fsn_core
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -70,8 +68,6 @@ services:
         parallelism: 1
         delay: 30s
       labels:
-        - xyz.freestuffbot.service.role=manager
-        - xyz.freestuffbot.service.network=fsn_core
         - prometheus-job=fsb
 
   discord_interactions:
@@ -102,8 +98,6 @@ services:
         parallelism: 1
         delay: 30s
       labels:
-        - xyz.freestuffbot.service.role=discord_interactions
-        - xyz.freestuffbot.service.network=fsn_discord
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -135,8 +129,30 @@ services:
         parallelism: 1
         delay: 30s
       labels:
-        - xyz.freestuffbot.service.role=discord_gateway
-        - xyz.freestuffbot.service.network=fsn_discord
+        - prometheus-job=fsb
+
+  discord_publisher:
+    image: ghcr.io/freestuffbot/fsb-discord-publisher:master
+    environment:
+      NODE_ENV: "production"
+      FSB_DISCORD_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
+      FSB_DISCORD_PUBLISHER_FREESTUFF_API_URL: "http://api"
+    networks:
+      - metrics
+      - rabbits
+      - fsn_publisher
+    secrets:
+      - FSB_DISCORD_PUBLISHER_MONGO_URL
+      - FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.hostname != coyote
+      update_config:
+        parallelism: 1
+        delay: 30s
+      labels:
         - prometheus-job=fsb
 
 networks:
@@ -183,4 +199,9 @@ secrets:
   FSB_DISCORD_GATEWAY_API_TOKEN:
     external: true
   FSB_DISCORD_GATEWAY_API_USER:
+    external: true
+  # DISCORD PUBLISHER
+  FSB_DISCORD_PUBLISHER_MONGO_URL:
+    external: true
+  FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY:
     external: true

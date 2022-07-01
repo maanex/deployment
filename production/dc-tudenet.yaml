@@ -10,7 +10,6 @@ services:
         constraints:
           - node.role == manager
       labels:
-        - prometheus-job=truth
         - traefik.enable=true
         - traefik.docker.network=proxy
         - traefik.http.services.truth.loadbalancer.server.port=80

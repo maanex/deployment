@@ -7,6 +7,7 @@ Group                 | name          | services
 📡 Infra              | dc-swarmpit   | app, couchdb, influxdb, agent
 📡 Infra              | dc-traefik    | traefik, whoami
 📡 Infra              | dc-monitoring | prometheus, grafana
+📡 Infra              | dc-tudenet    | truth
 🛒 FreeStuff (legacy) | dc-apps       | manager
 🛒 FreeStuff (legacy) | dc-co1        | fsdiscord
 🛒 FreeStuff (legacy) | dc-co2        | fsdiscord

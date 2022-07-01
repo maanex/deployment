@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  truth:
+    image: ghcr.io/tude-infra/truth:master
+    networks:
+      - proxy
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - prometheus-job=truth
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.truth.loadbalancer.server.port=80
+        - traefik.http.routers.truth.entrypoints=https
+        - traefik.http.routers.truth.rule=Host(`truth.tude.network`)
+        - traefik.http.routers.truth.tls.certresolver=cloudflare
+        - traefik.http.routers.truth.tls.domains[0].main=truth.tude.network
+
+networks:
+  proxy:
+    external: true

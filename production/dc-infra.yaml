@@ -16,7 +16,10 @@ services:
     image: rabbitmq:3.8
     hostname: rabbit
     networks:
-      - rabbits
+      rabbits:
+        aliases:
+          - rabbit
+          - infra_rabbit
     deploy:
       placement:
         constraints:

@@ -161,6 +161,31 @@ services:
         - xyz.freestuffbot.service.role=discord-publisher
         - prometheus-job=fsb
 
+  app_publisher:
+    image: ghcr.io/freestuffbot/fsb-app-publisher:master
+    environment:
+      NODE_ENV: "production"
+      FSB_APP_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
+      FSB_APP_PUBLISHER_FREESTUFF_API_URL: "http://api"
+    networks:
+      - metrics
+      - rabbits
+      - fsn_publisher
+    secrets:
+      - FSB_APP_PUBLISHER_MONGO_URL
+      - FSB_APP_PUBLISHER_FREESTUFF_API_KEY
+      - FSB_APP_PUBLISHER_UPSTREAM_URL
+      - FSB_APP_PUBLISHER_UPSTREAM_AUTH
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 30s
+      labels:
+        - xyz.freestuffbot.service.role=app-publisher
+        - prometheus-job=fsb
+
   thumbnailer:
     image: ghcr.io/freestuffbot/fsb-thumbnailer:master
     environment:

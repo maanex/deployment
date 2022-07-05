@@ -279,6 +279,15 @@ secrets:
     external: true
   FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY:
     external: true
+  # APP PUBLISHER
+  FSB_APP_PUBLISHER_MONGO_URL:
+    external: true
+  FSB_APP_PUBLISHER_FREESTUFF_API_KEY:
+    external: true
+  FSB_APP_PUBLISHER_UPSTREAM_URL:
+    external: true
+  FSB_APP_PUBLISHER_UPSTREAM_AUTH:
+    external: true
   # THUMBNAILER
   FSB_THUMBNAILER_DISCORD_TOKEN:
     external: true

@@ -15,8 +15,6 @@ services:
   rabbit:
     image: rabbitmq:3.8
     hostname: rabbit
-    dns:
-      hostname: rabbit
     networks:
       - rabbits
     deploy:

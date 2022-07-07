@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   fsdiscord:
-    image: ghcr.io/freestuffbot/discord:master
+    image: ghcr.io/freestuffbot/legacy:master
     environment:
       NODE_ENV: "production"
       NODE_ID: "co2"

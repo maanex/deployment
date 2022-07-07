@@ -13,10 +13,19 @@ services:
       - '--storage.tsdb.path=/prometheus'
     networks:
       - metrics
+      - proxy # REMOVE
     deploy:
       placement:
         constraints:
         - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.grafana.loadbalancer.server.port=9090
+        - traefik.http.routers.grafana.entrypoints=https
+        - traefik.http.routers.grafana.rule=Host(`debug-a1.tude.network`)
+        - traefik.http.routers.grafana.tls.certresolver=cloudflare
+        - traefik.http.routers.grafana.tls.domains[0].main=debug-a1.tude.network
 
   grafana:
     image: grafana/grafana

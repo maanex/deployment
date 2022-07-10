@@ -90,6 +90,8 @@ services:
     secrets:
       - FSB_DISCORD_INTERACTIONS_MONGO_URL
       - FSB_DISCORD_INTERACTIONS_FREESTUFF_API_KEY
+    depends_on:
+      - api
     deploy:
       mode: replicated
       replicas: 1
@@ -119,6 +121,8 @@ services:
     secrets:
       - FSB_DISCORD_GATEWAY_API_TOKEN
       - FSB_DISCORD_GATEWAY_API_USER
+    depends_on:
+      - api
     deploy:
       mode: replicated
       replicas: 1
@@ -145,6 +149,8 @@ services:
     secrets:
       - FSB_DISCORD_PUBLISHER_MONGO_URL
       - FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY
+    depends_on:
+      - api
     deploy:
       mode: global
       placement:
@@ -163,6 +169,8 @@ services:
       NODE_ENV: "production"
       FSB_APP_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
       FSB_APP_PUBLISHER_FREESTUFF_API_URL: "http://api"
+    depends_on:
+      - api
     networks:
       - metrics
       - rabbits

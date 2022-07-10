@@ -44,9 +44,9 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.fsb-api.loadbalancer.server.port=80
         - traefik.http.routers.fsb-api.entrypoints=https
-        - traefik.http.routers.fsb-api.rule=Host(`api-v2.freestuffbot.xyz`)
+        - traefik.http.routers.fsb-api.rule=Host(`api.freestuffbot.xyz`)
         - traefik.http.routers.fsb-api.tls.certresolver=cloudflare
-        - traefik.http.routers.fsb-api.tls.domains[0].main=api-v2.freestuffbot.xyz
+        - traefik.http.routers.fsb-api.tls.domains[0].main=api.freestuffbot.xyz
 
   manager:
     image: ghcr.io/freestuffbot/fsb-manager:master

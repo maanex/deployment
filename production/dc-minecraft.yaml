@@ -31,11 +31,11 @@ services:
       replicas: 1
       resources:
         limits:
+          cpus: '3.5'
+          memory: 6G
+        reservations:
           cpus: '3'
           memory: 4G
-        reservations:
-          cpus: '2'
-          memory: 3G
       placement:
         constraints:
           - node.hostname == mc

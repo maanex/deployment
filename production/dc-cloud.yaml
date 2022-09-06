@@ -14,7 +14,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      restart: always
 
   app:
     image: nextcloud
@@ -33,7 +32,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      restart: always
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -53,7 +51,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      restart: always
 
 
 networks:

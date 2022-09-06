@@ -1,0 +1,56 @@
+version: "3.3"
+
+volumes:
+  nextcloud: {}
+  db: {}
+
+services:
+  db:
+    image: mariadb:10.5
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    networks:
+      - net
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  app:
+    image: nextcloud
+    restart: always
+    networks:
+      - net
+      - proxy
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=db
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.greenlight.loadbalancer.server.port=80
+        - traefik.http.routers.greenlight.entrypoints=https
+        - traefik.http.routers.greenlight.rule=Host(`cloud.maanex.me`)
+        - traefik.http.routers.greenlight.tls.certresolver=cloudflare
+        - traefik.http.routers.greenlight.tls.domains[0].main=cloud.maanex.me
+
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+  proxy:
+    external: true

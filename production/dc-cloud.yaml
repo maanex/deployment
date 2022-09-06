@@ -1,43 +1,39 @@
 version: "3.3"
 
-volumes:
-  nextcloud: {}
-  db: {}
-
 services:
   db:
-    image: mariadb:10.5
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    image: postgres
     networks:
       - net
     volumes:
-      - db:/var/lib/mysql
+      - db:/var/lib/postgresql/data
     environment:
-      - MYSQL_ROOT_PASSWORD=nextcloudnextcloud
-      - MYSQL_PASSWORD=nextcloud
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
     deploy:
       mode: replicated
       replicas: 1
+      restart: always
 
   app:
     image: nextcloud
-    restart: always
     networks:
       - net
       - proxy
     volumes:
       - nextcloud:/var/www/html
     environment:
-      - MYSQL_PASSWORD=nextcloud
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=nextcloud
+    depends_on:
+      - db
     deploy:
       mode: replicated
       replicas: 1
+      restart: always
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -47,6 +43,18 @@ services:
         - traefik.http.routers.cloud.tls.certresolver=cloudflare
         - traefik.http.routers.cloud.tls.domains[0].main=cloud.maanex.me
 
+  cron:
+    image: nextcloud
+    volumes:
+      - nextcloud:/var/www/html
+    entrypoint: /cron.sh
+    depends_on:
+      - db
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart: always
+
 
 networks:
   net:
@@ -54,3 +62,7 @@ networks:
     attachable: true
   proxy:
     external: true
+
+volumes:
+  nextcloud: {}
+  db: {}

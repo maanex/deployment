@@ -6,7 +6,7 @@ services:
     networks:
       - net
     volumes:
-      - db:/var/lib/postgresql/data
+      - postgresdb:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=nextcloud
       - POSTGRES_USER=nextcloud
@@ -62,4 +62,4 @@ networks:
 
 volumes:
   nextcloud: {}
-  db: {}
+  postgresdb: {}

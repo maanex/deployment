@@ -41,11 +41,11 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
-        - traefik.http.services.greenlight.loadbalancer.server.port=80
-        - traefik.http.routers.greenlight.entrypoints=https
-        - traefik.http.routers.greenlight.rule=Host(`cloud.maanex.me`)
-        - traefik.http.routers.greenlight.tls.certresolver=cloudflare
-        - traefik.http.routers.greenlight.tls.domains[0].main=cloud.maanex.me
+        - traefik.http.services.cloud.loadbalancer.server.port=80
+        - traefik.http.routers.cloud.entrypoints=https
+        - traefik.http.routers.cloud.rule=Host(`cloud.maanex.me`)
+        - traefik.http.routers.cloud.tls.certresolver=cloudflare
+        - traefik.http.routers.cloud.tls.domains[0].main=cloud.maanex.me
 
 
 networks:

@@ -1,0 +1,50 @@
+version: "3.3"
+
+services:
+  backbone:
+    image: ghcr.io/maanex/sussyalien-backbone:master
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == coyote
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.alienbackbone.loadbalancer.server.port=8062
+        - traefik.http.routers.alienbackbone.entrypoints=https
+        - traefik.http.routers.alienbackbone.rule=Host(`sussyalien.tude.network`)
+        - traefik.http.routers.alienbackbone.tls.certresolver=cloudflare
+        - traefik.http.routers.alienbackbone.tls.domains[0].main=sussyalien.tude.network
+
+  game_server:
+    image: ghcr.io/maanex/sussyalien-game-server:master
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == coyote
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.alieneu01.loadbalancer.server.port=8068
+        - traefik.http.routers.alieneu01.entrypoints=https
+        - traefik.http.routers.alieneu01.rule=Host(`alien-eu01.tude.network`)
+        - traefik.http.routers.alieneu01.tls.certresolver=cloudflare
+        - traefik.http.routers.alieneu01.tls.domains[0].main=alien-eu01.tude.network
+
+networks:
+  proxy:
+    external: true

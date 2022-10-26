@@ -48,9 +48,18 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.grafana.loadbalancer.server.port=3000
         - traefik.http.routers.grafana.entrypoints=https
-        - traefik.http.routers.grafana.rule=Host(`monitoring.freestuffbot.xyz`)
+        - traefik.http.routers.grafana.rule=Host(`monitoring.tude.network`)
         - traefik.http.routers.grafana.tls.certresolver=cloudflare
-        - traefik.http.routers.grafana.tls.domains[0].main=monitoring.freestuffbot.xyz
+        - traefik.http.routers.grafana.tls.domains[0].main=monitoring.tude.network
+
+        - traefik.http.routers.grafana-fsburl.entrypoints=https
+        - traefik.http.routers.grafana-fsburl.rule=Host(`monitoring.freestuffbot.xyz`)
+        - traefik.http.routers.grafana-fsburl.tls.certresolver=cloudflare
+        - traefik.http.routers.grafana-fsburl.tls.domains[0].main=monitoring.freestuffbot.xyz
+        - traefik.http.routers.grafana-fsburl.middlewares=grafana-fsburl-regex
+        - traefik.http.middlewares.grafana-fsburl-regex.redirectregex.regex=(.)*
+        - traefik.http.middlewares.grafana-fsburl-regex.redirectregex.replacement=https://monitoring.tude.network
+        - traefik.http.middlewares.grafana-fsburl-regex.redirectregex.permanent=true
 
 
 networks:

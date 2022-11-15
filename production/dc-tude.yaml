@@ -27,9 +27,6 @@ services:
       - TUDEBOT_VAULT_PUBLIC_KEY
       - TUDEBOT_VAULT_PRIVATE_KEY
     deploy:
-      placement:
-        constraints:
-          - node.role == manager
       update_config:
         parallelism: 1
         delay: 10s

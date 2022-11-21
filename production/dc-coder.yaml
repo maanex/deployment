@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  coder:
+    image: ghcr.io/coder/coder:latest
+    ports:
+      - "7080:7080"
+    networks:
+      - db
+    environment:
+      CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
+      CODER_ADDRESS: "0.0.0.0:7080"
+      # You'll need to set CODER_ACCESS_URL to an IP or domain
+      # that workspaces can reach. This cannot be localhost
+      # or 127.0.0.1 for non-Docker templates!
+      CODER_ACCESS_URL: "${CODER_ACCESS_URL}"
+    # If the coder user does not have write permissions on
+    # the docker socket, you can uncomment the following
+    # lines and set the group ID to one that has write
+    # permissions on the docker socket.
+    #group_add:
+    #  - "998" # docker group on host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      database:
+        condition: service_healthy
+
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == co2
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.devspace.loadbalancer.server.port=80
+        - traefik.http.routers.devspace.entrypoints=https
+        - traefik.http.routers.devspace.rule=Host(`devspace.tude.network`)
+        - traefik.http.routers.devspace.tls.certresolver=cloudflare
+        - traefik.http.routers.devspace.tls.domains[0].main=devspace.tude.network
+
+  database:
+    image: "postgres:14.2"
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    environment:
+      POSTGRES_USER: coder
+      POSTGRES_PASSWORD: ${CODER_POSTGRES_PASSWORD}
+      POSTGRES_DB: coder
+    volumes:
+      - coder_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U coder -d coder" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  coder_data:
+
+networks:
+  db:
+    external: true

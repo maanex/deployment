@@ -10,10 +10,7 @@ services:
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "0.0.0.0:7080"
-      # You'll need to set CODER_ACCESS_URL to an IP or domain
-      # that workspaces can reach. This cannot be localhost
-      # or 127.0.0.1 for non-Docker templates!
-      CODER_ACCESS_URL: "${CODER_ACCESS_URL}"
+      CODER_ACCESS_URL: "https://devspace.tude.network"
     # If the coder user does not have write permissions on
     # the docker socket, you can uncomment the following
     # lines and set the group ID to one that has write
@@ -36,7 +33,7 @@ services:
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
-        - traefik.http.services.devspace.loadbalancer.server.port=80
+        - traefik.http.services.devspace.loadbalancer.server.port=7080
         - traefik.http.routers.devspace.entrypoints=https
         - traefik.http.routers.devspace.rule=Host(`devspace.tude.network`)
         - traefik.http.routers.devspace.tls.certresolver=cloudflare

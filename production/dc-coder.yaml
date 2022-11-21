@@ -12,7 +12,7 @@ services:
       CODER_ACCESS_URL: "https://devspace.tude.network"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/services/deployment/production/coder/:/home/coder/
+      # - /root/services/deployment/production/coder/:/home/coder/
     depends_on:
       - database
 

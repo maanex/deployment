@@ -12,12 +12,8 @@ services:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "127.0.0.1:7080"
       CODER_ACCESS_URL: "https://devspace.tude.network"
-    # If the coder user does not have write permissions on
-    # the docker socket, you can uncomment the following
-    # lines and set the group ID to one that has write
-    # permissions on the docker socket.
-    #group_add:
-    #  - "998" # docker group on host
+    expose:
+      - 7080:7080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:

@@ -61,4 +61,4 @@ volumes:
 
 networks:
   db:
-    external: true
+    driver: overlay

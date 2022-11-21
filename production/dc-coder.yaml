@@ -7,6 +7,7 @@ services:
       - "7080:7080"
     networks:
       - db
+      - proxy
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "127.0.0.1:7080"
@@ -60,5 +61,7 @@ volumes:
   coder_data:
 
 networks:
+  proxy:
+    external: true
   db:
     driver: overlay

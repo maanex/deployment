@@ -8,7 +8,7 @@ services:
       - proxy
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
-      CODER_ADDRESS: "127.0.0.1:3000"
+      CODER_ADDRESS: "0.0.0.0:3000"
       CODER_ACCESS_URL: "https://devspace.tude.network"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

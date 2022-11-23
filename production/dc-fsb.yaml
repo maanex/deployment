@@ -32,6 +32,7 @@ services:
       - FSB_API_PRIVATE_KEY
       - FSB_API_AUDITLOG_DEST_DISCORD
       - FSB_API_NOTIFICATIONS_DEST_DISCORD
+      - FSB_API_DISCORD_HELPER_AUTH_TOKEN
     deploy:
       mode: replicated
       replicas: 1
@@ -275,6 +276,8 @@ secrets:
   FSB_API_AUDITLOG_DEST_DISCORD:
     external: true
   FSB_API_NOTIFICATIONS_DEST_DISCORD:
+    external: true
+  FSB_API_DISCORD_HELPER_AUTH_TOKEN:
     external: true
   # MANAGER
   FSB_MANAGER_MONGO_URL:

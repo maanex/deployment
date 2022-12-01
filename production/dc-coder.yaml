@@ -10,6 +10,7 @@ services:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "0.0.0.0:3000"
       CODER_ACCESS_URL: "https://devspace.tude.network"
+      CODER_WILDCARD_ACCESS_URL: "*.devenv.tude.network"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # - /root/services/deployment/production/coder/:/home/coder/
@@ -31,6 +32,12 @@ services:
         - traefik.http.routers.devspace.rule=Host(`devspace.tude.network`)
         - traefik.http.routers.devspace.tls.certresolver=cloudflare
         - traefik.http.routers.devspace.tls.domains[0].main=devspace.tude.network
+        - traefik.http.services.devspaceenv.loadbalancer.server.port=3000
+        - traefik.http.routers.devspaceenv.entrypoints=https
+        - traefik.http.routers.devspaceenv.rule=Host(`devenv.tude.network`)
+        - traefik.http.routers.devspaceenv.tls.certresolver=cloudflare
+        - traefik.http.routers.devspaceenv.tls.domains[0].main=devenv.tude.network
+        - traefik.http.routers.devspaceenv.tls.domains[0].sans=*.devenv.tude.network
 
   database:
     image: "postgres:14.2"

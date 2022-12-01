@@ -34,10 +34,9 @@ services:
         - traefik.http.routers.devspace.tls.domains[0].main=devspace.tude.network
         - traefik.http.services.devspaceenv.loadbalancer.server.port=3000
         - traefik.http.routers.devspaceenv.entrypoints=https
-        - traefik.http.routers.devspaceenv.rule=Host(`devenv.tude.network`)
+        - traefik.http.routers.devspaceenv.rule=Host(`test.devenv.tude.network`)
         - traefik.http.routers.devspaceenv.tls.certresolver=cloudflare
-        - traefik.http.routers.devspaceenv.tls.domains[0].main=devenv.tude.network
-        - traefik.http.routers.devspaceenv.tls.domains[0].sans=*.devenv.tude.network
+        - traefik.http.routers.devspaceenv.tls.domains[0].main=test.devenv.tude.network
 
   database:
     image: "postgres:14.2"

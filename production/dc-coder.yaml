@@ -29,9 +29,11 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.devspace.loadbalancer.server.port=3000
         - traefik.http.routers.devspace.entrypoints=https
-        - traefik.http.routers.devspace.rule=Host(`devspace.tude.network`, `test.devenv.tude.network`)
+        - traefik.http.routers.devspace.rule=Host(`devspace.tude.network`)
         - traefik.http.routers.devspace.tls.certresolver=cloudflare
         - traefik.http.routers.devspace.tls.domains[0].main=devspace.tude.network
+        - traefik.http.routers.devspaceenv.entrypoints=http
+        - traefik.http.routers.devspaceenv.rule=Host(`test.devenv.tude.network`)
 
   database:
     image: "postgres:14.2"

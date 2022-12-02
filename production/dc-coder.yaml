@@ -30,7 +30,7 @@ services:
         - traefik.http.services.tudedev.loadbalancer.server.port=3000
         - traefik.http.routers.tudedev.entrypoints=https
         # - traefik.http.routers.tudedev.rule=Host(`tudedev.xyz`)
-        - traefik.http.routers.tudedev.rule=HostRegexp(`^.+\.tudedev\.xyz$`)
+        - traefik.http.routers.tudedev.rule=HostRegexp(`^.+\.tudedev\.xyz$$`)
         - traefik.http.routers.tudedev.tls.certresolver=cloudflare
         - traefik.http.routers.tudedev.tls.domains[0].main=tudedev.xyz
 

@@ -43,4 +43,4 @@ RUN useradd coder \
 
 USER coder
 
-RUN mkdir repos
+RUN mkdir /home/coder/repos

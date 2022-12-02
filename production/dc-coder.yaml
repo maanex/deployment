@@ -25,13 +25,14 @@ services:
         parallelism: 1
         delay: 10s
       labels:
-        # - traefik.enable=true
-        # - traefik.docker.network=proxy
-        # - traefik.http.services.tudedev.loadbalancer.server.port=3000
-        # - traefik.http.routers.tudedev.entrypoints=https
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.tudedev.loadbalancer.server.port=3000
+        - traefik.http.routers.tudedev.entrypoints=https
         # - traefik.http.routers.tudedev.rule=Host(`tudedev.xyz`)
-        # - traefik.http.routers.tudedev.tls.certresolver=cloudflare
-        # - traefik.http.routers.tudedev.tls.domains[0].main=tudedev.xyz
+        - traefik.http.routers.tudedev.rule=HostRegexp(`^.+\.tudedev\.xyz$`)
+        - traefik.http.routers.tudedev.tls.certresolver=cloudflare
+        - traefik.http.routers.tudedev.tls.domains[0].main=tudedev.xyz
 
   database:
     image: "postgres:14.2"

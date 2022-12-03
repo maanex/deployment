@@ -6,6 +6,7 @@ services:
     networks:
       - db
       - proxy
+      - mongo_test
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "0.0.0.0:3000"
@@ -57,6 +58,8 @@ volumes:
 
 networks:
   proxy:
+    external: true
+  mongo_test:
     external: true
   db:
     driver: overlay

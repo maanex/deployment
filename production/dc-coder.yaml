@@ -6,6 +6,7 @@ services:
     networks:
       - db
       - proxy
+      - mongo_test
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "0.0.0.0:3000"
@@ -52,11 +53,33 @@ services:
       timeout: 5s
       retries: 5
 
+  devenv_mongo:
+    image: mongo:latest
+    networks:
+      devenv:
+        ipv4_address: 10.42.0.6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodb
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+    volumes:
+      - devenv_mongo:/data/db
+    # deploy:
+    #   placement:
+    #     constraints:
+    #       - node.hostname == co2
+
 volumes:
   coder_data:
+  devenv_mongo:
 
 networks:
   proxy:
     external: true
   db:
     driver: overlay
+  devenv:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.42.0.0/16
+         gateway: 10.42.0.1

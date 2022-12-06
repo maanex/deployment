@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  test:
+    image: mongo:latest
+    networks:
+      - mongo_test
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodb
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+    # ports:
+    #   - 27017:27017
+    volumes:
+      - mongo_test:/data/db
+
+    # deploy:
+    #   placement:
+    #     constraints:
+    #       - node.hostname == co2
+
+volumes:
+  mongo_test:
+
+networks:
+  mongo_test:
+    external: true

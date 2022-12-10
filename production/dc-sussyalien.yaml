@@ -8,9 +8,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      placement:
-        constraints:
-          - node.hostname == coyote
       update_config:
         parallelism: 1
         delay: 10s
@@ -30,9 +27,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      placement:
-        constraints:
-          - node.hostname == coyote
       update_config:
         parallelism: 1
         delay: 10s

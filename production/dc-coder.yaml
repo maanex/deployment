@@ -20,7 +20,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == co2
+          - node.role == manager
       update_config:
         parallelism: 1
         delay: 10s

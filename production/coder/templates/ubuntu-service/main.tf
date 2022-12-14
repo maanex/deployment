@@ -93,17 +93,17 @@ variable "docker_image" {
 #   }
 # }
 
-resource "docker_image" "coder_image" {
-  name = "coder-base-${data.coder_workspace.me.owner}-${lower(data.coder_workspace.me.name)}"
-  build {
-    path       = "./images/"
-    dockerfile = "${var.docker_image}.Dockerfile"
-    tag        = ["coder-${var.docker_image}:v0.1"]
-  }
+# resource "docker_image" "coder_image" {
+#   name = "coder-base-${data.coder_workspace.me.owner}-${lower(data.coder_workspace.me.name)}"
+#   build {
+#     path       = "./images/"
+#     dockerfile = "${var.docker_image}.Dockerfile"
+#     tag        = ["coder-${var.docker_image}:v0.1"]
+#   }
 
-  # Keep alive for other workspaces to use upon deletion
-  keep_locally = true
-}
+#   # Keep alive for other workspaces to use upon deletion
+#   keep_locally = true
+# }
 
 resource "docker_service" "workspace" {
   name = "coder-${data.coder_workspace.me.owner}-${lower(data.coder_workspace.me.name)}"

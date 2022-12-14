@@ -4,7 +4,7 @@ services:
   test:
     image: mongo:latest
     networks:
-      - mongo_test
+      - devenv
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongodb
       MONGO_INITDB_ROOT_PASSWORD: mongodb
@@ -22,5 +22,5 @@ volumes:
   mongo_test:
 
 networks:
-  mongo_test:
+  devenv:
     external: true

@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  test:
+  mongodb:
     image: mongo:latest
     networks:
       - devenv
@@ -11,7 +11,7 @@ services:
     # ports:
     #   - 27017:27017
     volumes:
-      - mongo_test:/data/db
+      - devenv_mongo:/data/db
 
     # deploy:
     #   placement:
@@ -19,7 +19,7 @@ services:
     #       - node.hostname == co2
 
 volumes:
-  mongo_test:
+  devenv_mongo:
 
 networks:
   devenv:

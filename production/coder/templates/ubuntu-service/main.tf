@@ -137,10 +137,11 @@ resource "docker_service" "workspace" {
       }
     }
 
-
     placement {
       constraints = [ "node.hostname == co2" ]
     }
+
+    networks = [ data.docker_network.devenv.id ]
   }
 
   # Add labels in Docker to keep track of orphan resources.

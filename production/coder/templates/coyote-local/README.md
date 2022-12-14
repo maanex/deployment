@@ -1,6 +1,6 @@
-# Tude Ubuntu Workspace
+# Tude Coyote Local Workspace
 
-This template sets you up with a lightweight ubuntu machine.
+This template sets you up with a docker based workspace running on the coyote cluster.
 
 You can pick between different base images, some of them have additional software pre-installed.
 

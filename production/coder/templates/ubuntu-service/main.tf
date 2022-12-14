@@ -111,7 +111,7 @@ resource "docker_service" "workspace" {
   
   task_spec {
     container_spec {
-      image = "${docker_image.coder_image.name}:latest"
+      image = "ghcr.io/maanex/coder-ubuntu:master"
 
       command  = ["sh", "-c", replace(coder_agent.main.init_script, "/localhost|127\\.0\\.0\\.1/", "host.docker.internal")]
       hostname = data.coder_workspace.me.name

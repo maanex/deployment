@@ -8,15 +8,19 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongodb
       MONGO_INITDB_ROOT_PASSWORD: mongodb
-    # ports:
-    #   - 27017:27017
     volumes:
       - devenv_mongo:/data/db
 
-    # deploy:
-    #   placement:
-    #     constraints:
-    #       - node.hostname == co2
+  rabbitmq:
+    image: rabbitmq:latest
+    networks:
+      - devenv
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
 
 volumes:
   devenv_mongo:

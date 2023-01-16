@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:20.0.3
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.keycloak.loadbalancer.server.port=8080
+        - traefik.http.routers.keycloak.entrypoints=https
+        - traefik.http.routers.keycloak.rule=Host(`debug-b2.tude.network`)
+        - traefik.http.routers.keycloak.tls.certresolver=cloudflare
+        - traefik.http.routers.keycloak.tls.domains[0].main=debug-b2.tude.network
+
+networks:
+  proxy:
+    external: true

@@ -6,6 +6,7 @@ services:
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+      - PROXY_ADRESS_FORWARDING=true
     networks:
       - proxy
     command: start-dev

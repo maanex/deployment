@@ -9,7 +9,7 @@ services:
       - PROXY_ADRESS_FORWARDING=true
     networks:
       - proxy
-    command: start --proxy edge --hostname-url https://debug-b2.tude.network/
+    command: start --proxy edge --hostname-url https://account.tude.club/
     deploy:
       mode: replicated
       replicas: 1
@@ -21,9 +21,9 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.keycloak.loadbalancer.server.port=8080
         - traefik.http.routers.keycloak.entrypoints=https
-        - traefik.http.routers.keycloak.rule=Host(`debug-b2.tude.network`)
+        - traefik.http.routers.keycloak.rule=Host(`account.tude.club`)
         - traefik.http.routers.keycloak.tls.certresolver=cloudflare
-        - traefik.http.routers.keycloak.tls.domains[0].main=debug-b2.tude.network
+        - traefik.http.routers.keycloak.tls.domains[0].main=account.tude.club
 
 networks:
   proxy:

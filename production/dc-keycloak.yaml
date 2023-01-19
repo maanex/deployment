@@ -10,6 +10,8 @@ services:
       POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
     networks:
       - db
+    volumes:
+      - keycloack_postgres_data:/var/lib/postgresql/data
 
   keycloak:
     image: quay.io/keycloak/keycloak:20.0.3
@@ -28,6 +30,8 @@ services:
       - db
       - proxy
     command: start --proxy edge --hostname-url https://account.tude.club/
+    volumes:
+      - keycloack_app_data:/opt/jboss/keycloak/standalone/data/
     deploy:
       mode: replicated
       replicas: 1
@@ -42,6 +46,10 @@ services:
         - traefik.http.routers.keycloak.rule=Host(`account.tude.club`)
         - traefik.http.routers.keycloak.tls.certresolver=cloudflare
         - traefik.http.routers.keycloak.tls.domains[0].main=account.tude.club
+
+volumes:
+  keycloack_postgres_data:
+  keycloack_app_data:
 
 networks:
   proxy:

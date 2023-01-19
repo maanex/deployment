@@ -1,13 +1,31 @@
 version: "3.3"
 
 services:
+  postgres:
+    image: postgres:13.2
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
+    networks:
+      - db
+
   keycloak:
     image: quay.io/keycloak/keycloak:20.0.3
+    depends_on:
+      - postgres
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+      - DB_VENDOR: postgres
+      - DB_ADDR: postgres
+      - DB_DATABASE: postgres
+      - DB_USER: postgres
+      - DB_PASSWORD: ${KEYCLOAK_POSTGRES_PASSWORD}
       - PROXY_ADRESS_FORWARDING=true
     networks:
+      - db
       - proxy
     command: start --proxy edge --hostname-url https://account.tude.club/
     deploy:
@@ -28,3 +46,5 @@ services:
 networks:
   proxy:
     external: true
+  db:
+    driver: overlay

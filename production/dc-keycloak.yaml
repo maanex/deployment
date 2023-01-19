@@ -9,7 +9,7 @@ services:
       - PROXY_ADRESS_FORWARDING=true
     networks:
       - proxy
-    command: start-dev
+    command: start --proxy edge
     deploy:
       mode: replicated
       replicas: 1

@@ -9,7 +9,7 @@ services:
       - PROXY_ADRESS_FORWARDING=true
     networks:
       - proxy
-    command: start --proxy edge
+    command: start --proxy edge --hostname-url https://debug-b2.tude.network/
     deploy:
       mode: replicated
       replicas: 1

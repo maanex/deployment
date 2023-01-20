@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   api:
-    image: ghcr.io/freestuffbot/fsb-api:master
+    image: ghcr.io/freestuffbot/fsb-api:main
     environment:
       NODE_ENV: "production"
       FSB_API_PORT: "80"
@@ -51,7 +51,7 @@ services:
         - traefik.http.routers.fsb-api.tls.domains[0].main=api.freestuffbot.xyz
 
   manager:
-    image: ghcr.io/freestuffbot/fsb-manager:master
+    image: ghcr.io/freestuffbot/fsb-manager:main
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
@@ -76,7 +76,7 @@ services:
         - prometheus-job=fsb
 
   discord_interactions:
-    image: ghcr.io/freestuffbot/fsb-discord-interactions:master
+    image: ghcr.io/freestuffbot/fsb-discord-interactions:main
     environment:
       NODE_ENV: "production"
       FSB_DISCORD_INTERACTIONS_PORT: "80"
@@ -114,7 +114,7 @@ services:
         - traefik.http.routers.fsb-discord-interactions.tls.domains[0].main=inbound-discord--net.freestuffbot.xyz
 
   discord_gateway:
-    image: ghcr.io/freestuffbot/fsb-discord-gateway:master
+    image: ghcr.io/freestuffbot/fsb-discord-gateway:main
     environment:
       NODE_ENV: "production"
       FSB_DISCORD_GATEWAY_PORT: "80"
@@ -141,7 +141,7 @@ services:
         - prometheus-job=fsb
 
   discord_publisher:
-    image: ghcr.io/freestuffbot/fsb-discord-publisher:master
+    image: ghcr.io/freestuffbot/fsb-discord-publisher:main
     environment:
       NODE_ENV: "production"
       FSB_DISCORD_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
@@ -169,7 +169,7 @@ services:
         - prometheus-job=fsb
 
   app_publisher:
-    image: ghcr.io/freestuffbot/fsb-app-publisher:master
+    image: ghcr.io/freestuffbot/fsb-app-publisher:main
     environment:
       NODE_ENV: "production"
       FSB_APP_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
@@ -197,7 +197,7 @@ services:
         - prometheus-job=fsb
 
   thumbnailer:
-    image: ghcr.io/freestuffbot/fsb-thumbnailer:master
+    image: ghcr.io/freestuffbot/fsb-thumbnailer:main
     environment:
       NODE_ENV: "production"
       FSB_THUMBNAILER_PORT: "80"
@@ -219,7 +219,7 @@ services:
         - prometheus-job=fsb
 
   link_proxy:
-    image: ghcr.io/freestuffbot/fsb-link-proxy:master
+    image: ghcr.io/freestuffbot/fsb-link-proxy:main
     environment:
       NODE_ENV: "production"
       FSB_LINK_PROXY_PORT: "80"

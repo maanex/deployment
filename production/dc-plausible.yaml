@@ -37,7 +37,7 @@ services:
       - plausible_db
       - plausible_events_db
     environment:
-      BASE_URL: debug-c3.tude.network
+      BASE_URL: https://debug-c3.tude.network
       SECRET_KEY_BASE: ${PLAUSIBLE_SECRET}
     deploy:
       placement:

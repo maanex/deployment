@@ -2,15 +2,29 @@ version: '3'
 services:
   umami:
     image: ghcr.io/umami-software/umami:postgresql-latest
-    ports:
-      - "3000:3000"
     environment:
       DATABASE_URL: postgresql://umami:umami@db:5432/umami
       DATABASE_TYPE: postgresql
       HASH_SALT: replace-me-with-a-random-string
     depends_on:
       - db
-    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.umami.loadbalancer.server.port=3000
+        - traefik.http.routers.umami.entrypoints=https
+        - traefik.http.routers.umami.rule=Host(`debug-c3.tude.network`)
+        - traefik.http.routers.umami.tls.certresolver=cloudflare
+        - traefik.http.routers.umami.tls.domains[0].main=debug-c3.tude.network
 
   db:
     image: postgres:12-alpine
@@ -21,7 +35,6 @@ services:
     volumes:
       - ./sql/schema.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
       - umami-db-data:/var/lib/postgresql/data
-    restart: always
 
 volumes:
   umami-db-data:

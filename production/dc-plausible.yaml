@@ -9,7 +9,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == co1
+          - node.role == manager
       mode: replicated
       replicas: 1
 
@@ -26,7 +26,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == co1
+          - node.role == manager
       mode: replicated
       replicas: 1
 
@@ -42,7 +42,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == co1
+          - node.role == manager
       mode: replicated
       replicas: 1
       update_config:

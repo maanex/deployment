@@ -25,9 +25,9 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.umami.loadbalancer.server.port=3000
         - traefik.http.routers.umami.entrypoints=https
-        - traefik.http.routers.umami.rule=Host(`debug-c3.tude.network`)
+        - traefik.http.routers.umami.rule=Host(`wa.tude.club`)
         - traefik.http.routers.umami.tls.certresolver=cloudflare
-        - traefik.http.routers.umami.tls.domains[0].main=debug-c3.tude.network
+        - traefik.http.routers.umami.tls.domains[0].main=wa.tude.club
 
   db:
     image: postgres:12-alpine

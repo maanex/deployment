@@ -8,6 +8,8 @@ services:
       HASH_SALT: replace-me-with-a-random-string
     depends_on:
       - db
+    networks:
+      - proxy
     deploy:
       mode: replicated
       replicas: 1
@@ -44,6 +46,10 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
+
+networks:
+  proxy:
+    external: true
 
 volumes:
   umami-db-data:

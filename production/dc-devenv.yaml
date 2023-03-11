@@ -20,6 +20,10 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == co2
 
 
 volumes:

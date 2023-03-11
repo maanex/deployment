@@ -11,8 +11,6 @@ services:
     volumes:
       - devenv_mongo:/data/db
     deploy:
-      mode: replicated
-      replicas: 1
       placement:
         constraints:
           - node.hostname == co2

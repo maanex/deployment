@@ -10,10 +10,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: mongodb
     volumes:
       - devenv_mongo:/data/db
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == co2
 
   rabbitmq:
     image: rabbitmq:latest

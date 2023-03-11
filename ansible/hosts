@@ -1,0 +1,11 @@
+[coyote]
+51.75.78.121
+167.86.108.178
+161.97.102.92
+185.202.236.217
+
+
+[coyote:vars]
+ansible_connection=ssh
+ansible_user=root
+ansible_ssh_pass=raspberry

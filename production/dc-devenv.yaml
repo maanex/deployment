@@ -10,6 +10,12 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: mongodb
     volumes:
       - devenv_mongo:/data/db
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == co1
 
   rabbitmq:
     image: rabbitmq:latest

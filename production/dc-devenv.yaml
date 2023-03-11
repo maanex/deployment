@@ -15,7 +15,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == coyote
+          - node.hostname == co2
 
   rabbitmq:
     image: rabbitmq:latest

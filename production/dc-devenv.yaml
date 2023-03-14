@@ -26,8 +26,8 @@ services:
       placement:
         constraints:
           - node.hostname == co2
-          
-  runner_chrome:
+
+  chrome:
     image: zenika/alpine-chrome
     entrypoint: [
       "chromium-browser",

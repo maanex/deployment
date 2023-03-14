@@ -28,7 +28,7 @@ services:
           - node.hostname == co2
 
   chrome:
-    image: zenika/alpine-chrome
+    image: zenika/alpine-chrome:with-puppeteer
     entrypoint: [
       "chromium-browser",
       "--headless",

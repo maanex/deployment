@@ -48,6 +48,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == co2
 
 volumes:
   coder_data:

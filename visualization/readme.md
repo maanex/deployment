@@ -1,1 +1,0 @@
-This folder is used to visualize the infrastructure. It only produces the infrastructure.png file, you don't need to run it yourself.

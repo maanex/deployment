@@ -1,0 +1,33 @@
+- hosts: all
+  become: 'yes'
+  vars:
+    user:
+      - name: "pi"
+        password: "{{ lookup('ansible.builtin.env', 'USER_PASSWORD TODO') }}"
+        ssh_key: "{{ lookup('ansible.builtin.env', 'USER_SSH_KEY TODO') }}"
+    packages:
+      - wget
+      - curl
+      - htop
+      # TODO https://medium.com/running-a-software-factory/setup-3-node-high-availability-cluster-with-glusterfs-and-docker-swarm-b4ff80c6b5c3
+  tasks:
+    - name: Change password for default user
+      user:
+        name: '"{{ item.name }}"'
+        password: '"{{ item.password | password_hash('sha512') }}"'
+        state: present
+      loop:
+        - '"{{ user }}"'
+    - name: Add SSH public key
+      authorized_key:
+        user: '"{{ item.name }}"'
+        key: '"{{ item.ssh_key }}"'
+      loop:
+        - '"{{ user }}"'
+    - name: Ensure a list of packages installed
+      apt:
+        name: '"{{ packages }}"'
+        state: present
+    - name: All done!
+      debug:
+        msg: Packages have been successfully installed

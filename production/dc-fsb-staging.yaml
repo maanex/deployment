@@ -10,7 +10,6 @@ services:
       FSB_API_RABBIT_URL: "amqp://infra_rabbit"
       FSB_API_DASH_CORS_ORIGIN: "https://dashboard.freestuffbot.xyz"
       FSB_API_DASH_OAUTH_CALLBACK_URL: "https://dashboard.freestuffbot.xyz/oauth/callback"
-      FSB_NETWORK_GIBU_GQL_ENDPOINT: "http://gibu_api_games/graphql"
       FSB_NETWORK_THUMBNAILER: "http://thumbnailer"
       FSB_NETWORK_MANAGER: "http://manager"
       FSB_NETWORK_LINK_PROXY: "http://link_proxy"
@@ -21,7 +20,6 @@ services:
       - rabbits
       - metrics
       - proxy
-      - gibu
       - fsn_core
       - fsn_discord
       - fsn_publisher

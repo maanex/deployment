@@ -1,7 +1,7 @@
 version: "3.3"
 
 services:
-  api:
+  stage_api:
     image: ghcr.io/freestuffbot/fsb-api:staging
     environment:
       NODE_ENV: "production"
@@ -10,9 +10,9 @@ services:
       FSB_API_RABBIT_URL: "amqp://infra_rabbit"
       FSB_API_DASH_CORS_ORIGIN: "https://dashboard.freestuffbot.xyz"
       FSB_API_DASH_OAUTH_CALLBACK_URL: "https://dashboard.freestuffbot.xyz/oauth/callback"
-      FSB_NETWORK_THUMBNAILER: "http://thumbnailer"
-      FSB_NETWORK_MANAGER: "http://manager"
-      FSB_NETWORK_LINK_PROXY: "http://link_proxy"
+      FSB_NETWORK_THUMBNAILER: "http://stage_thumbnailer"
+      FSB_NETWORK_MANAGER: "http://stage_manager"
+      FSB_NETWORK_LINK_PROXY: "http://stage_link_proxy"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
       FSB_API_PRIVATE_KEY_URI: "/run/secrets/FSB_API_PRIVATE_KEY"
     networks:
@@ -48,7 +48,7 @@ services:
         - traefik.http.routers.fsb-api.tls.certresolver=cloudflare
         - traefik.http.routers.fsb-api.tls.domains[0].main=staging-api.freestuffbot.xyz
 
-  manager:
+  stage_manager:
     image: ghcr.io/freestuffbot/fsb-manager:staging
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -73,15 +73,15 @@ services:
         - xyz.freestuffbot.service.role=manager
         - prometheus-job=fsb
 
-  discord_interactions:
+  stage_discord_interactions:
     image: ghcr.io/freestuffbot/fsb-discord-interactions:staging
     environment:
       NODE_ENV: "production"
       FSB_DISCORD_INTERACTIONS_PORT: "80"
       FSB_DISCORD_INTERACTIONS_RABBIT_URL: "amqp://infra_rabbit"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
-      FSB_NETWORK_DISCORD_GATEWAY: "http://discord_gateway"
-      FSB_DISCORD_INTERACTIONS_FREESTUFF_API_URL: "http://api"
+      FSB_NETWORK_DISCORD_GATEWAY: "http://stage_discord_gateway"
+      FSB_DISCORD_INTERACTIONS_FREESTUFF_API_URL: "http://stage_api"
       FSB_DISCORD_INTERACTIONS_CLIENTID: "1099268793127161948"
       FSB_DISCORD_INTERACTIONS_PUBKEY: "803b6a7fe1b2550e970cf005d7c2ae81801e84bad11e499cd404f9383367987a"
     networks:
@@ -111,7 +111,7 @@ services:
         - traefik.http.routers.fsb-discord-interactions.tls.certresolver=cloudflare
         - traefik.http.routers.fsb-discord-interactions.tls.domains[0].main=staging-inbound-discord--net.freestuffbot.xyz
 
-  discord_gateway:
+  stage_discord_gateway:
     image: ghcr.io/freestuffbot/fsb-discord-gateway:staging
     environment:
       NODE_ENV: "production"
@@ -138,12 +138,12 @@ services:
         - xyz.freestuffbot.service.role=discord-gateway
         - prometheus-job=fsb
 
-  discord_publisher:
+  stage_discord_publisher:
     image: ghcr.io/freestuffbot/fsb-discord-publisher:staging
     environment:
       NODE_ENV: "production"
       FSB_DISCORD_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
-      FSB_DISCORD_PUBLISHER_FREESTUFF_API_URL: "http://api"
+      FSB_DISCORD_PUBLISHER_FREESTUFF_API_URL: "http://stage_api"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
     networks:
       - metrics
@@ -166,12 +166,12 @@ services:
         - xyz.freestuffbot.service.role=discord-publisher
         - prometheus-job=fsb
 
-  app_publisher:
+  stage_app_publisher:
     image: ghcr.io/freestuffbot/fsb-app-publisher:staging
     environment:
       NODE_ENV: "production"
       FSB_APP_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
-      FSB_APP_PUBLISHER_FREESTUFF_API_URL: "http://api"
+      FSB_APP_PUBLISHER_FREESTUFF_API_URL: "http://stage_api"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
     depends_on:
       - api
@@ -201,7 +201,7 @@ services:
   #     FSB_NODE_ENV: "production"
   #     FSB_TELEGRAM_PUBLISHER_PORT: "80"
   #     FSB_TELEGRAM_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
-  #     FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_URL: "http://api"
+  #     FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_URL: "http://stage_api"
   #     FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
   #   depends_on:
   #     - api
@@ -222,7 +222,7 @@ services:
   #       - xyz.freestuffbot.service.role=telegram-publisher
   #       - prometheus-job=fsb
 
-  thumbnailer:
+  stage_thumbnailer:
     image: ghcr.io/freestuffbot/fsb-thumbnailer:staging
     environment:
       NODE_ENV: "production"
@@ -244,7 +244,7 @@ services:
         - xyz.freestuffbot.service.role=thumbnailer
         - prometheus-job=fsb
 
-  link_proxy:
+  stage_link_proxy:
     image: ghcr.io/freestuffbot/fsb-link-proxy:staging
     environment:
       NODE_ENV: "production"

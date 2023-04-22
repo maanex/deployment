@@ -1,20 +1,20 @@
 version: "3.3"
 
 services:
-  runner_chrome:
-    image: zenika/alpine-chrome
-    entrypoint: [
-      "chromium-browser",
-      "--headless",
-      "--disable-gpu",
-      "--disable-software-rasterizer",
-      "--disable-dev-shm-usage",
-      "--no-sandbox",
-      "--remote-debugging-address=0.0.0.0",
-      "--remote-debugging-port=9222"
-    ]
-    networks:
-      - gibu
+  # runner_chrome:
+  #   image: zenika/alpine-chrome
+  #   entrypoint: [
+  #     "chromium-browser",
+  #     "--headless",
+  #     "--disable-gpu",
+  #     "--disable-software-rasterizer",
+  #     "--disable-dev-shm-usage",
+  #     "--no-sandbox",
+  #     "--remote-debugging-address=0.0.0.0",
+  #     "--remote-debugging-port=9222"
+  #   ]
+  #   networks:
+  #     - gibu
 
   api_games:
     image: ghcr.io/maanex-gibu/api_games:master

@@ -26,13 +26,13 @@ services:
       - fsn_discord
       - fsn_publisher
     secrets:
-      - FSB_API_MONGO_URL
-      - FSB_API_OAUTH_DISCORD_APPID
-      - FSB_API_OAUTH_DISCORD_APPSECRET
+      - FSB_API_MONGO_URL_STAGING
+      - FSB_API_OAUTH_DISCORD_APPID_STAGING
+      - FSB_API_OAUTH_DISCORD_APPSECRET_STAGING
       - FSB_API_PRIVATE_KEY
       - FSB_API_AUDITLOG_DEST_DISCORD
       - FSB_API_NOTIFICATIONS_DEST_DISCORD
-      - FSB_API_DISCORD_HELPER_AUTH_TOKEN
+      - FSB_API_DISCORD_HELPER_AUTH_TOKEN_STAGING
     deploy:
       mode: replicated
       replicas: 1
@@ -61,7 +61,7 @@ services:
       - fsn_core
       - fsn_discord
     secrets:
-      - FSB_MANAGER_MONGO_URL
+      - FSB_MANAGER_MONGO_URL_STAGING
     deploy:
       mode: replicated
       placement:
@@ -92,8 +92,8 @@ services:
       - proxy
       - fsn_discord
     secrets:
-      - FSB_DISCORD_INTERACTIONS_MONGO_URL
-      - FSB_DISCORD_INTERACTIONS_FREESTUFF_API_KEY
+      - FSB_DISCORD_INTERACTIONS_MONGO_URL_STAGING
+      - FSB_DISCORD_INTERACTIONS_FREESTUFF_API_KEY_STAGING
     depends_on:
       - api
     deploy:
@@ -123,8 +123,8 @@ services:
       - metrics
       - fsn_discord
     secrets:
-      - FSB_DISCORD_GATEWAY_API_TOKEN
-      - FSB_DISCORD_GATEWAY_API_USER
+      - FSB_DISCORD_GATEWAY_API_TOKEN_STAGING
+      - FSB_DISCORD_GATEWAY_API_USER_STAGING
     depends_on:
       - api
     deploy:
@@ -152,8 +152,8 @@ services:
       - rabbits
       - fsn_publisher
     secrets:
-      - FSB_DISCORD_PUBLISHER_MONGO_URL
-      - FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY
+      - FSB_DISCORD_PUBLISHER_MONGO_URL_STAGING
+      - FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY_STAGING
     depends_on:
       - api
     deploy:
@@ -182,10 +182,10 @@ services:
       - rabbits
       - fsn_publisher
     secrets:
-      - FSB_APP_PUBLISHER_MONGO_URL
-      - FSB_APP_PUBLISHER_FREESTUFF_API_KEY
-      - FSB_APP_PUBLISHER_UPSTREAM_URL
-      - FSB_APP_PUBLISHER_UPSTREAM_AUTH
+      - FSB_APP_PUBLISHER_MONGO_URL_STAGING
+      - FSB_APP_PUBLISHER_FREESTUFF_API_KEY_STAGING
+      - FSB_APP_PUBLISHER_UPSTREAM_URL_STAGING
+      - FSB_APP_PUBLISHER_UPSTREAM_AUTH_STAGING
     deploy:
       mode: replicated
       replicas: 1
@@ -196,33 +196,33 @@ services:
         - xyz.freestuffbot.service.role=app-publisher
         - prometheus-job=fsb
 
-  telegram_publisher:
-    image: ghcr.io/freestuffbot/fsb-telegram-publisher:staging
-    environment:
-      NODE_ENV: "production"
-      FSB_NODE_ENV: "production"
-      FSB_TELEGRAM_PUBLISHER_PORT: "80"
-      FSB_TELEGRAM_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
-      FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_URL: "http://api"
-      FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
-    depends_on:
-      - api
-    networks:
-      - metrics
-      - rabbits
-      - fsn_publisher
-    secrets:
-      - FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_KEY
-      - FSB_TELEGRAM_PUBLISHER_TELEGRAM_BOT_TOKEN
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 30s
-      labels:
-        - xyz.freestuffbot.service.role=telegram-publisher
-        - prometheus-job=fsb
+  # telegram_publisher:
+  #   image: ghcr.io/freestuffbot/fsb-telegram-publisher:staging
+  #   environment:
+  #     NODE_ENV: "production"
+  #     FSB_NODE_ENV: "production"
+  #     FSB_TELEGRAM_PUBLISHER_PORT: "80"
+  #     FSB_TELEGRAM_PUBLISHER_RABBIT_URL: "amqp://infra_rabbit"
+  #     FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_URL: "http://api"
+  #     FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - metrics
+  #     - rabbits
+  #     - fsn_publisher
+  #   secrets:
+  #     - FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_KEY
+  #     - FSB_TELEGRAM_PUBLISHER_TELEGRAM_BOT_TOKEN
+  #   deploy:
+  #     mode: replicated
+  #     replicas: 1
+  #     update_config:
+  #       parallelism: 1
+  #       delay: 30s
+  #     labels:
+  #       - xyz.freestuffbot.service.role=telegram-publisher
+  #       - prometheus-job=fsb
 
   thumbnailer:
     image: ghcr.io/freestuffbot/fsb-thumbnailer:staging
@@ -235,7 +235,7 @@ services:
       - metrics
       - fsn_tools
     secrets:
-      - FSB_THUMBNAILER_DISCORD_TOKEN
+      - FSB_THUMBNAILER_DISCORD_TOKEN_STAGING
     deploy:
       mode: replicated
       replicas: 1
@@ -256,7 +256,7 @@ services:
       - metrics
       - fsn_tools
     secrets:
-      - FSB_LINK_PROXY_MONGO_URL
+      - FSB_LINK_PROXY_MONGO_URL_STAGING
       - FSB_LINK_PROXY_FIREBASE_API_KEY
       - FSB_LINK_PROXY_FIREBASE_SERVICE_ACCOUNT_KEY
     deploy:
@@ -279,8 +279,6 @@ networks:
     external: true
   proxy:
     external: true
-  gibu:
-    external: true
   # freestuff network -> internal communication
   fsn_core:
     driver: overlay
@@ -293,11 +291,11 @@ networks:
 
 secrets:
   # API
-  FSB_API_MONGO_URL:
+  FSB_API_MONGO_URL_STAGING:
     external: true
-  FSB_API_OAUTH_DISCORD_APPID:
+  FSB_API_OAUTH_DISCORD_APPID_STAGING:
     external: true
-  FSB_API_OAUTH_DISCORD_APPSECRET:
+  FSB_API_OAUTH_DISCORD_APPSECRET_STAGING:
     external: true
   FSB_API_PRIVATE_KEY:
     external: true
@@ -305,45 +303,45 @@ secrets:
     external: true
   FSB_API_NOTIFICATIONS_DEST_DISCORD:
     external: true
-  FSB_API_DISCORD_HELPER_AUTH_TOKEN:
+  FSB_API_DISCORD_HELPER_AUTH_TOKEN_STAGING:
     external: true
   # MANAGER
-  FSB_MANAGER_MONGO_URL:
+  FSB_MANAGER_MONGO_URL_STAGING:
     external: true
   # DISCORD INTERACTIONS
-  FSB_DISCORD_INTERACTIONS_MONGO_URL:
+  FSB_DISCORD_INTERACTIONS_MONGO_URL_STAGING:
     external: true
-  FSB_DISCORD_INTERACTIONS_FREESTUFF_API_KEY:
+  FSB_DISCORD_INTERACTIONS_FREESTUFF_API_KEY_STAGING:
     external: true
   # DISCORD GATEWAY
-  FSB_DISCORD_GATEWAY_API_TOKEN:
+  FSB_DISCORD_GATEWAY_API_TOKEN_STAGING:
     external: true
-  FSB_DISCORD_GATEWAY_API_USER:
+  FSB_DISCORD_GATEWAY_API_USER_STAGING:
     external: true
   # DISCORD PUBLISHER
-  FSB_DISCORD_PUBLISHER_MONGO_URL:
+  FSB_DISCORD_PUBLISHER_MONGO_URL_STAGING:
     external: true
-  FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY:
+  FSB_DISCORD_PUBLISHER_FREESTUFF_API_KEY_STAGING:
     external: true
   # APP PUBLISHER
-  FSB_APP_PUBLISHER_MONGO_URL:
+  FSB_APP_PUBLISHER_MONGO_URL_STAGING:
     external: true
-  FSB_APP_PUBLISHER_FREESTUFF_API_KEY:
+  FSB_APP_PUBLISHER_FREESTUFF_API_KEY_STAGING:
     external: true
-  FSB_APP_PUBLISHER_UPSTREAM_URL:
+  FSB_APP_PUBLISHER_UPSTREAM_URL_STAGING:
     external: true
-  FSB_APP_PUBLISHER_UPSTREAM_AUTH:
+  FSB_APP_PUBLISHER_UPSTREAM_AUTH_STAGING:
     external: true
   # TELEGRAM PUBLISHER
-  FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_KEY:
-    external: true
-  FSB_TELEGRAM_PUBLISHER_TELEGRAM_BOT_TOKEN:
-    external: true
+#  FSB_TELEGRAM_PUBLISHER_FREESTUFF_API_KEY:
+#    external: true
+#  FSB_TELEGRAM_PUBLISHER_TELEGRAM_BOT_TOKEN:
+#    external: true
   # THUMBNAILER
-  FSB_THUMBNAILER_DISCORD_TOKEN:
+  FSB_THUMBNAILER_DISCORD_TOKEN_STAGING:
     external: true
   # LINK PROXY
-  FSB_LINK_PROXY_MONGO_URL:
+  FSB_LINK_PROXY_MONGO_URL_STAGING:
     external: true
   FSB_LINK_PROXY_FIREBASE_API_KEY:
     external: true

@@ -4,6 +4,9 @@ services:
   rabbitmq:
     image: rabbitmq:3.8
     hostname: rabbit
+    networks:
+      - fsn_discord
+      - fsn_publisher
     deploy:
       placement:
         constraints:

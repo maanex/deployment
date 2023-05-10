@@ -50,11 +50,11 @@ services:
         - prometheus-job=fsb
         - traefik.enable=true
         - traefik.docker.network=proxy
-        - traefik.http.services.fsb-api.loadbalancer.server.port=80
-        - traefik.http.routers.fsb-api.entrypoints=https
-        - traefik.http.routers.fsb-api.rule=Host(`staging-api.freestuffbot.xyz`)
-        - traefik.http.routers.fsb-api.tls.certresolver=cloudflare
-        - traefik.http.routers.fsb-api.tls.domains[0].main=staging-api.freestuffbot.xyz
+        - traefik.http.services.fsb-api-staging.loadbalancer.server.port=80
+        - traefik.http.routers.fsb-api-staging.entrypoints=https
+        - traefik.http.routers.fsb-api-staging.rule=Host(`staging-api.freestuffbot.xyz`)
+        - traefik.http.routers.fsb-api-staging.tls.certresolver=cloudflare
+        - traefik.http.routers.fsb-api-staging.tls.domains[0].main=staging-api.freestuffbot.xyz
 
   stage_manager:
     image: ghcr.io/freestuffbot/fsb-manager:staging

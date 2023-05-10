@@ -3,7 +3,6 @@ version: "3.3"
 services:
   stage_rabbitmq:
     image: rabbitmq:3.8
-    hostname: rabbit
     networks:
       - fsn_discord
       - fsn_publisher

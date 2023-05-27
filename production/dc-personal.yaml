@@ -1,43 +1,44 @@
 version: "3.3"
 
 services:
-  greenlight:
-    image: ghcr.io/maanex/greenlight:master
+  maanexspace:
+    image: ghcr.io/maanex/space-backend:master
+    environment:
+      MNXSPACE_FRONTEND_URL: 'https://space.maanex.me'
+      MNXSPACE_PRIVATE_KEY_URI: '/run/secrets/MNXSPACE_PRIVATE_KEY'
     secrets:
-      - GREENLIGHT_DBOT_TOKEN
-      - GREENLIGHT_DBOT_ID
-      - GREENLIGHT_DBOT_PUBKEY
-      - GREENLIGHT_MONGO_URL
+      - MNXSPACE_MONGO_URL
+      - MNXSPACE_PRIVATE_KEY
+      - MNXSPACE_DISCORD_CLIENT_SECRET
+      - MNXSPACE_GITHUB_CLIENT_SECRET
     networks:
       - proxy
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.hostname == co1
       update_config:
         parallelism: 1
         delay: 10s
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
-        - traefik.http.services.greenlight.loadbalancer.server.port=80
-        - traefik.http.routers.greenlight.entrypoints=https
-        - traefik.http.routers.greenlight.rule=Host(`greenlight.maanex.me`)
-        - traefik.http.routers.greenlight.tls.certresolver=cloudflare
-        - traefik.http.routers.greenlight.tls.domains[0].main=greenlight.maanex.me
+        - traefik.http.services.maanexspace.loadbalancer.server.port=80
+        - traefik.http.routers.maanexspace.entrypoints=https
+        - traefik.http.routers.maanexspace.rule=Host(`maanexspace-prod-eu01.tude.network`)
+        - traefik.http.routers.maanexspace.tls.certresolver=cloudflare
+        - traefik.http.routers.maanexspace.tls.domains[0].main=maanexspace-prod-eu01.tude.network
 
 networks:
   proxy:
     external: true
 
 secrets:
-  GREENLIGHT_DBOT_TOKEN:
+  MNXSPACE_MONGO_URL:
     external: true
-  GREENLIGHT_DBOT_ID:
+  MNXSPACE_PRIVATE_KEY:
     external: true
-  GREENLIGHT_DBOT_PUBKEY:
+  MNXSPACE_DISCORD_CLIENT_SECRET:
     external: true
-  GREENLIGHT_MONGO_URL:
-    external: true
-  WUMPUM_DBOT_TOKEN:
+  MNXSPACE_GITHUB_CLIENT_SECRET:
     external: true

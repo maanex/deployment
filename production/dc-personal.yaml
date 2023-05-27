@@ -5,6 +5,7 @@ services:
     image: ghcr.io/maanex/space-backend:master
     environment:
       MNXSPACE_FRONTEND_URL: 'https://space.maanex.me'
+      MNXSPACE_CALLBACK_URL: 'https://space.maanex.me/callback'
       MNXSPACE_PRIVATE_KEY_URI: '/run/secrets/MNXSPACE_PRIVATE_KEY'
     secrets:
       - MNXSPACE_MONGO_URL

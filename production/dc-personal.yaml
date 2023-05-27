@@ -12,6 +12,7 @@ services:
       - MNXSPACE_PRIVATE_KEY
       - MNXSPACE_DISCORD_CLIENT_SECRET
       - MNXSPACE_GITHUB_CLIENT_SECRET
+      - MNXSPACE_DISCORD_WEBHOOK_URL
     networks:
       - proxy
     deploy:
@@ -42,4 +43,6 @@ secrets:
   MNXSPACE_DISCORD_CLIENT_SECRET:
     external: true
   MNXSPACE_GITHUB_CLIENT_SECRET:
+    external: true
+  MNXSPACE_DISCORD_WEBHOOK_URL:
     external: true

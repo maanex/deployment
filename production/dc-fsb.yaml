@@ -382,3 +382,6 @@ secrets:
     external: true
   FSB_LINK_PROXY_FIREBASE_SERVICE_ACCOUNT_KEY:
     external: true
+  # SCRAPER
+  FSB_SCRAPER_MONGO_URL:
+    external: true

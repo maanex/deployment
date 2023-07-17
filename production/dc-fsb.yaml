@@ -25,6 +25,7 @@ services:
       FSB_NETWORK_THUMBNAILER: "http://thumbnailer"
       FSB_NETWORK_MANAGER: "http://manager"
       FSB_NETWORK_LINK_PROXY: "http://link_proxy"
+      FSB_NETWORK_SCRAPER: "http://scraper"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
       FSB_API_PRIVATE_KEY_URI: "/run/secrets/FSB_API_PRIVATE_KEY"
     networks:

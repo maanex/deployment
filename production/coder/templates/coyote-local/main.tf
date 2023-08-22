@@ -54,16 +54,6 @@ resource "coder_app" "code-server" {
 
 }
 
-variable "docker_image" {
-  description = "What Docker image would you like to use for your workspace?"
-  default     = "ubuntu"
-
-  validation {
-    condition     = contains(["ubuntu"], var.docker_image)
-    error_message = "Invalid Docker image!"
-  }
-}
-
 resource "docker_volume" "home_volume" {
   name = "coder-${data.coder_workspace.me.id}-home"
   # Protect the volume from being deleted due to changes in attributes.
@@ -95,7 +85,7 @@ resource "docker_service" "workspace" {
   
   task_spec {
     container_spec {
-      image = "ghcr.io/maanex/coder-${var.docker_image}:master"
+      image = "ghcr.io/maanex/coder-ubuntu:master"
 
       command  = ["sh", "-c", replace(coder_agent.main.init_script, "/localhost|127\\.0\\.0\\.1/", "host.docker.internal")]
       hostname = data.coder_workspace.me.name
@@ -167,6 +157,6 @@ resource "coder_metadata" "container_info" {
 
   item {
     key   = "image"
-    value = var.docker_image
+    value = "ubuntu"
   }
 }

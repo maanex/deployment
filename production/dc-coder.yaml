@@ -1,5 +1,14 @@
 version: "3.9"
 
+volumes:
+  coder_data:
+
+networks:
+  proxy:
+    external: true
+  db:
+    driver: overlay
+
 services:
   coder:
     image: ghcr.io/coder/coder:latest
@@ -52,12 +61,3 @@ services:
       placement:
         constraints:
           - node.hostname == co2
-
-volumes:
-  coder_data:
-
-networks:
-  proxy:
-    external: true
-  db:
-    driver: overlay

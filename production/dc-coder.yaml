@@ -11,7 +11,7 @@ networks:
 
 services:
   coder:
-    image: ghcr.io/coder/coder:latest
+    image: ghcr.io/coder/coder:2.0.0
     networks:
       - db
       - proxy

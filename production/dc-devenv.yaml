@@ -42,7 +42,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.role == co2
+          - node.hostname == co2
 
   # chrome:
   #   image: zenika/alpine-chrome:with-puppeteer

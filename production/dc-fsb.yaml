@@ -104,6 +104,7 @@ services:
       - proxy
       - fsn_discord
     secrets:
+      - FSB_WEBHOOK_VOUCHERS
       - FSB_DISCORD_INTERACTIONS_MONGO_URL
       - FSB_DISCORD_INTERACTIONS_FREESTUFF_API_KEY
     depends_on:
@@ -324,6 +325,10 @@ networks:
     driver: overlay
 
 secrets:
+  # MULTI PURPOSE
+  FSB_WEBHOOK_VOUCHERS:
+    external: true
+
   # API
   FSB_API_MONGO_URL:
     external: true

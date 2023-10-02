@@ -52,12 +52,11 @@ services:
       POSTGRES_DB: coder
     volumes:
       - coder_data:/var/lib/postgresql/data
-    # healthcheck:
-    #   test: [ "CMD-SHELL", "pg_isready -U coder -d coder" ]
-    #   interval: 5s
-    #   timeout: 5s
-    #   retries: 5
-    entrypoint: 'sleep 5000'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U coder -d coder" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     deploy:
       placement:
         constraints:

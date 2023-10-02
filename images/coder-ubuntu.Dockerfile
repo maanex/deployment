@@ -18,6 +18,8 @@ RUN apt-get update && \
     unzip \
     vim \
     cmake \
+    openjdk-8-jdk \
+    maven \
     wget && \
     # Install latest Git using their official PPA
     add-apt-repository ppa:git-core/ppa && \

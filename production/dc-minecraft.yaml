@@ -5,8 +5,8 @@ services:
     image: itzg/minecraft-server
     environment:
       EULA: "TRUE"
-      TYPE: "SPIGOT"
-      VERSION: "1.19"
+      TYPE: "PAPER"
+      VERSION: "1.20.2"
       MEMORY: "6G"
     ports:
       - target: 25565

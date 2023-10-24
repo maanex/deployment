@@ -5,7 +5,7 @@ services:
     image: itzg/minecraft-server
     environment:
       EULA: "TRUE"
-      TYPE: "PAPER"
+      TYPE: "PURPUR"
       VERSION: "1.20.2"
       MEMORY: "6G"
     ports:

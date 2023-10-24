@@ -7,7 +7,8 @@ services:
       EULA: "TRUE"
       TYPE: "PURPUR"
       VERSION: "1.20.2"
-      MEMORY: "6G"
+      MEMORY: ""
+      JVM_XX_OPTS: "-XX:MaxRAMPercentage=75"
     ports:
       - target: 25565
         published: 25565

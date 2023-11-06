@@ -70,11 +70,13 @@ services:
     environment:
       NODE_ENV: "production"
       FSB_MANAGER_PORT: "80"
+      FSB_MANAGER_RABBIT_URL: "amqp://rabbitmq"
     networks:
       - fsn_core
       - fsn_discord
     secrets:
       - FSB_MANAGER_MONGO_URL
+      - FSB_WEBHOOK_SERVICES
     deploy:
       mode: replicated
       placement:
@@ -134,6 +136,7 @@ services:
     environment:
       NODE_ENV: "production"
       FSB_DISCORD_GATEWAY_PORT: "80"
+      FSB_DISCORD_GATEWAY_RABBIT_URL: "amqp://rabbitmq"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
     networks:
       - metrics
@@ -244,6 +247,7 @@ services:
     environment:
       NODE_ENV: "production"
       FSB_THUMBNAILER_PORT: "80"
+      FSB_THUMBNAILER_RABBIT_URL: "amqp://rabbitmq"
       FSB_THUMBNAILER_DISCORD_CDN_CHANNEL: "1066018140129079296"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
     networks:
@@ -266,6 +270,7 @@ services:
     environment:
       NODE_ENV: "production"
       FSB_LINK_PROXY_PORT: "80"
+      FSB_LINK_PROXY_RABBIT_URL: "amqp://rabbitmq"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
     networks:
       - metrics
@@ -289,6 +294,7 @@ services:
     environment:
       NODE_ENV: "production"
       FSB_SCRAPER_PORT: "80"
+      FSB_SCRAPER_RABBIT_URL: "amqp://rabbitmq"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
       FSB_NETWORK_PUPPETEER: "http://disabled_todo"
     networks:
@@ -327,6 +333,8 @@ networks:
 secrets:
   # MULTI PURPOSE
   FSB_WEBHOOK_VOUCHERS:
+    external: true
+  FSB_WEBHOOK_SERVICES:
     external: true
 
   # API

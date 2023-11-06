@@ -75,6 +75,7 @@ services:
     networks:
       - fsn_core
       - fsn_discord
+      - fsn_tools
     secrets:
       - FSB_MANAGER_MONGO_URL
       - FSB_WEBHOOK_SERVICES

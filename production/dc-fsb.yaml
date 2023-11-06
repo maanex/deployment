@@ -332,6 +332,7 @@ services:
       - FSB_BUTLER_MONGO_URL
       - FSB_BUTLER_TOKEN
       - FSB_BUTLER_FREESTUFF_API_KEY
+      - FSB_WEBHOOK_VOUCHERS
     deploy:
       mode: replicated
       replicas: 1

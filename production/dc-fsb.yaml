@@ -304,6 +304,7 @@ services:
       - fsn_tools
     secrets:
       - FSB_SCRAPER_MONGO_URL
+      - FSB_WEBHOOK_SCRAPER
     deploy:
       mode: replicated
       replicas: 1
@@ -366,6 +367,8 @@ secrets:
   FSB_WEBHOOK_VOUCHERS:
     external: true
   FSB_WEBHOOK_SERVICES:
+    external: true
+  FSB_WEBHOOK_SCRAPER:
     external: true
 
   # API

@@ -10,9 +10,6 @@ services:
       - '8080'
       - --scheme
       - http
-    ports:
-      - 8080:8080
-      - 50051:50051
     volumes:
       - weaviate_data:/var/lib/weaviate
     environment:
@@ -27,6 +24,7 @@ services:
     networks:
       - proxy
       - weaviate_int
+      - devenv
     deploy:
       mode: replicated
       replicas: 1
@@ -40,7 +38,7 @@ services:
         - prometheus-job=weaviate
         - traefik.enable=true
         - traefik.docker.network=proxy
-        - traefik.http.services.weaviate.loadbalancer.server.port=80
+        - traefik.http.services.weaviate.loadbalancer.server.port=8080
         - traefik.http.routers.weaviate.entrypoints=https
         - traefik.http.routers.weaviate.rule=Host(`debug-b2.tude.network`)
         - traefik.http.routers.weaviate.tls.certresolver=cloudflare
@@ -52,6 +50,7 @@ services:
       ENABLE_CUDA: '0'
     networks:
       - weaviate_int
+      - devenv
     deploy:
       mode: replicated
       replicas: 1
@@ -65,6 +64,7 @@ services:
       ENABLE_CUDA: '0'
     networks:
       - weaviate_int
+      - devenv
     deploy:
       mode: replicated
       replicas: 1
@@ -79,4 +79,6 @@ networks:
   weaviate_int:
     driver: overlay
   proxy:
+    external: true
+  devenv:
     external: true

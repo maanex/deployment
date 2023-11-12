@@ -1,0 +1,64 @@
+version: "3.3"
+
+services:
+  weaviate:
+    image: semitechnologies/weaviate:1.22.3
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8080'
+      - --scheme
+      - http
+    ports:
+      - 8080:8080
+      - 50051:50051
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    environment:
+      TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
+      IMAGE_INFERENCE_API: 'http://i2v-neural:8080'
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'text2vec-transformers'
+      ENABLE_MODULES: 'text2vec-transformers,img2vec-neural'
+      CLUSTER_HOSTNAME: 'node1'
+    networks:
+      - proxy
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == co1
+      update_config:
+        parallelism: 1
+        delay: 30s
+      labels:
+        - xyz.freestuffbot.service.role=api
+        - prometheus-job=fsb
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.fsb-api.loadbalancer.server.port=80
+        - traefik.http.routers.fsb-api.entrypoints=https
+        - traefik.http.routers.fsb-api.rule=Host(`api.freestuffbot.xyz`)
+        - traefik.http.routers.fsb-api.tls.certresolver=cloudflare
+        - traefik.http.routers.fsb-api.tls.domains[0].main=api.freestuffbot.xyz
+
+  t2v-transformers:
+    image: semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
+    environment:
+      ENABLE_CUDA: '0'
+
+  i2v-neural:
+    image: semitechnologies/img2vec-pytorch:resnet50
+    environment:
+      ENABLE_CUDA: '0'
+
+volumes:
+  weaviate_data:
+
+networks:
+  proxy:
+    external: true

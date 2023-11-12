@@ -18,8 +18,8 @@ services:
     environment:
       CODER_PG_CONNECTION_URL: "postgresql://coder:${CODER_POSTGRES_PASSWORD}@database/coder?sslmode=disable"
       CODER_ADDRESS: "0.0.0.0:3000"
-      CODER_ACCESS_URL: "https://tudedev.xyz"
-      CODER_WILDCARD_ACCESS_URL: "*.tudedev.xyz"
+      CODER_ACCESS_URL: "https://dev.tude.club"
+      CODER_WILDCARD_ACCESS_URL: "*.dev.tude.club"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
@@ -37,10 +37,10 @@ services:
         - traefik.docker.network=proxy
         - traefik.http.services.tudedev.loadbalancer.server.port=3000
         - traefik.http.routers.tudedev.entrypoints=https
-        # - traefik.http.routers.tudedev.rule=Host(`tudedev.xyz`)
+        # - traefik.http.routers.tudedev.rule=Host(`dev.tude.club`)
         - traefik.http.routers.tudedev.rule=HostRegexp(`{host:^(.+\.)?tudedev\.xyz$$}`)
         - traefik.http.routers.tudedev.tls.certresolver=cloudflare
-        - traefik.http.routers.tudedev.tls.domains[0].main=tudedev.xyz
+        - traefik.http.routers.tudedev.tls.domains[0].main=dev.tude.club
 
   database:
     image: "postgres:14.2"

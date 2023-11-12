@@ -22,7 +22,6 @@ services:
       ENABLE_MODULES: 'text2vec-transformers,img2vec-neural'
       CLUSTER_HOSTNAME: 'co1'
     networks:
-      - proxy
       - weaviate_int
       - devenv
     deploy:
@@ -36,13 +35,6 @@ services:
         delay: 30s
       labels:
         - prometheus-job=weaviate
-        - traefik.enable=true
-        - traefik.docker.network=proxy
-        - traefik.http.services.weaviate.loadbalancer.server.port=8080
-        - traefik.http.routers.weaviate.entrypoints=https
-        - traefik.http.routers.weaviate.rule=Host(`debug-b2.tude.network`)
-        - traefik.http.routers.weaviate.tls.certresolver=cloudflare
-        - traefik.http.routers.weaviate.tls.domains[0].main=debug-b2.tude.network
 
   t2v-transformers:
     image: semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
@@ -78,7 +70,5 @@ volumes:
 networks:
   weaviate_int:
     driver: overlay
-  proxy:
-    external: true
   devenv:
     external: true

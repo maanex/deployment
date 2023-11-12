@@ -26,6 +26,7 @@ services:
       CLUSTER_HOSTNAME: 'co1'
     networks:
       - proxy
+      - weaviate_int
     deploy:
       mode: replicated
       replicas: 1
@@ -49,6 +50,8 @@ services:
     image: semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
     environment:
       ENABLE_CUDA: '0'
+    networks:
+      - weaviate_int
     deploy:
       mode: replicated
       replicas: 1
@@ -60,6 +63,8 @@ services:
     image: semitechnologies/img2vec-pytorch:resnet50
     environment:
       ENABLE_CUDA: '0'
+    networks:
+      - weaviate_int
     deploy:
       mode: replicated
       replicas: 1
@@ -71,5 +76,7 @@ volumes:
   weaviate_data:
 
 networks:
+  weaviate_int:
+    driver: overlay
   proxy:
     external: true

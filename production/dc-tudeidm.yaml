@@ -8,7 +8,6 @@ services:
     networks:
       - proxy
       - metrics
-    secrets:
     deploy:
       update_config:
         parallelism: 1

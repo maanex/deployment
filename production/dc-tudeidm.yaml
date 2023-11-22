@@ -27,5 +27,3 @@ networks:
     external: true
   metrics:
     external: true
-
-secrets:

@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+  ui:
+    image: ghcr.io/tude-infra/account-ui:master
+    environment:
+      NODE_ENV: "production"
+    networks:
+      - proxy
+      - metrics
+    secrets:
+    deploy:
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - prometheus-job=tudeidm-ui
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.idm-ui.loadbalancer.server.port=80
+        - traefik.http.routers.idm-ui.entrypoints=https
+        - traefik.http.routers.idm-ui.rule=Host(`account.tude.club`)
+        - traefik.http.routers.idm-ui.tls.certresolver=cloudflare
+        - traefik.http.routers.idm-ui.tls.domains[0].main=account.tude.club
+
+networks:
+  proxy:
+    external: true
+  metrics:
+    external: true
+
+secrets:

@@ -1,0 +1,60 @@
+#!/usr/bin/env zx
+
+const http = require("http")
+const path = require("path")
+
+const host = 'localhost'
+const port = 25573
+
+function parseAuthHeader(authHeader) {
+  try {
+    if (!authHeader) return false
+    if (!authHeader.startsWith('Basic ')) return false
+    const auth = atob(authHeader.substring('Basic '.length))
+    if (!auth) return false
+    const [ user, key ] = auth.split(':')
+    if (!user || !key) return false
+    if (!/^\w{2,20}$/.test(user)) return false
+
+    const mustMatch = process.env['CIDAEMON_AUTH_' + user.toUpperCase()]
+    if (!mustMatch) return false
+    if (key !== mustMatch) return false
+
+    return [ user, key ]
+  } catch (ex) {
+    return false
+  }
+}
+
+const server = http.createServer((req, res) => {
+  try {
+    if (req.method.toLocaleLowerCase() !== 'post') {
+      res.writeHead(400)
+      res.end('bad request, buddy')
+      return
+    }
+    const auth = parseAuthHeader(req.headers.authorization)
+    if (!auth) {
+      res.writeHead(403)
+      res.end('piss off mate')
+      return
+    }
+
+    res.writeHead(200)
+    res.end('kbye')
+
+    const stack = req.url.split('/').join('').replace(/[^\w-]/g, '')
+    console.log(`Deploying ${stack} as requested by ${auth[0]}`)
+    const exec = path.join(__dirname, './deploy')
+    await $`${exec} ${stack}`
+    console.log(`Done deploying ${stack} (by ${auth[0]})`)
+  } catch (ex) {
+    console.error(ex)
+  }
+})
+
+server
+  .listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`)
+  })
+  .on('close', () => process.exit(0))

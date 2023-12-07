@@ -45,8 +45,8 @@ const server = http.createServer((req, res) => {
 
     const stack = req.url.split('/').join('').replace(/[^\w-]/g, '')
     console.log(`Deploying ${stack} as requested by ${auth[0]}`)
-    const exec = path.join(__dirname, './deploy')
-    await $`${exec} ${stack}`
+    const dirn = path.join(__dirname, './deploy')
+    await $`${dirn} ${stack}`
     console.log(`Done deploying ${stack} (by ${auth[0]})`)
   } catch (ex) {
     console.error(ex)

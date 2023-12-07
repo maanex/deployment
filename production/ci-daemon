@@ -3,7 +3,7 @@
 const http = require("http")
 const path = require("path")
 
-const host = 'localhost'
+const host = '0.0.0.0'
 const port = 25573
 
 function parseAuthHeader(authHeader) {

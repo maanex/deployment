@@ -1,0 +1,19 @@
+name: Deploy to prod
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+    # workflows: [Run Tests]
+    # types:
+    #   - completed
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: deploy
+        run: echo "lmao"

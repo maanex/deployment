@@ -29,6 +29,10 @@ services:
     networks:
       - proxy
       - metrics
+    secrets:
+      - TIAM_SENDGRID_API_KEY
+      - TIAM_MONGO_URL
+      - TIAM_JWT_SECRET
     deploy:
       update_config:
         parallelism: 1
@@ -42,6 +46,15 @@ services:
         - traefik.http.routers.tude-iam.rule=Host(`iam.tude.network`)
         - traefik.http.routers.tude-iam.tls.certresolver=cloudflare
         - traefik.http.routers.tude-iam.tls.domains[0].main=iam.tude.network
+
+secrets:
+  # MULTI PURPOSE
+  TIAM_SENDGRID_API_KEY:
+    external: true
+  TIAM_MONGO_URL:
+    external: true
+  TIAM_JWT_SECRET:
+    external: true
 
 networks:
   proxy:

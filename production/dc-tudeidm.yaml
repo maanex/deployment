@@ -22,6 +22,27 @@ services:
         - traefik.http.routers.idm-ui.tls.certresolver=cloudflare
         - traefik.http.routers.idm-ui.tls.domains[0].main=account.tude.club
 
+  iam:
+    image: ghcr.io/tude-infra/iam:master
+    environment:
+      NODE_ENV: "production"
+    networks:
+      - proxy
+      - metrics
+    deploy:
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - prometheus-job=tude-iam
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.tude-iam.loadbalancer.server.port=80
+        - traefik.http.routers.tude-iam.entrypoints=https
+        - traefik.http.routers.tude-iam.rule=Host(`iam.tude.network`)
+        - traefik.http.routers.tude-iam.tls.certresolver=cloudflare
+        - traefik.http.routers.tude-iam.tls.domains[0].main=iam.tude.network
+
 networks:
   proxy:
     external: true

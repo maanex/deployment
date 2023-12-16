@@ -17,7 +17,7 @@ services:
     deploy:
       placement:
         constraints:
-        - node.role == manager
+          - node.labels.slice==B
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -42,7 +42,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.labels.slice==B
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy

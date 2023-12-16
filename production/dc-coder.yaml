@@ -28,7 +28,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.labels.slice==B
       update_config:
         parallelism: 1
         delay: 10s
@@ -60,4 +60,4 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname == co2
+          - node.labels.slice==B

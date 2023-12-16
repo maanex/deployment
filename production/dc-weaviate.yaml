@@ -29,7 +29,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == co1
+          - node.labels.slice==B
       update_config:
         parallelism: 1
         delay: 30s
@@ -48,7 +48,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == co1
+          - node.labels.slice==B
 
   i2v-neural:
     image: semitechnologies/img2vec-pytorch:resnet50
@@ -62,7 +62,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == co1
+          - node.labels.slice==B
 
 volumes:
   weaviate_data:

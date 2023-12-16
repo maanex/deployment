@@ -17,10 +17,13 @@ sudo passwd -d root
 # install docker
 sh <(curl -s https://get.docker.com)
 
+# add other nodes to sync up
+sed -e '/# BEGIN TUDE SYNC/,/# END TUDE SYNC/ { s/.*// }' /etc/hosts > /etc/hosts
+echo "\n# BEGIN TUDE SYNC\n\n# END TUDE SYNC" >> /etc/hosts
+
+# join swarm
 read -p "Swarm join token: " swtoken
-
  docker swarm join --token $swtoken
-
 
 
 

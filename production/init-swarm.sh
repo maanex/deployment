@@ -19,3 +19,11 @@ docker network create --driver=overlay fsm-micros
 docker network create --driver=overlay metrics
 docker network create --driver=overlay gibu
 docker network create --driver=overlay devenv
+
+
+docker node update --label-add slice=A co1
+docker node update --label-add slice=A co2
+docker node update --label-add slice=B co3
+docker node update --label-add slice=B co4
+
+

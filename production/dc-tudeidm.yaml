@@ -9,6 +9,9 @@ services:
       - proxy
       - metrics
     deploy:
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 10s
@@ -34,6 +37,9 @@ services:
       - TIAM_MONGO_URL
       - TIAM_JWT_SECRET
     deploy:
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 10s

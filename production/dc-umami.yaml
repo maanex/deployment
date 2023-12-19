@@ -16,7 +16,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 10s
@@ -45,7 +45,9 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.labels.autoscale==true
+          - node.labels.persistent==true
+          - node.labels.hasconf==true
       update_config:
         parallelism: 1
         delay: 10s

@@ -11,7 +11,8 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.labels.autoscale==true
+          - node.labels.persistent==true
 
   api:
     image: ghcr.io/freestuffbot/fsb-api:main
@@ -47,6 +48,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -77,6 +81,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -110,7 +117,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname==co1
+          - node.labels.t_fsbpu==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -146,7 +153,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.hostname=co1
+          - node.labels.t_fsbpu==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -174,7 +181,7 @@ services:
       mode: global
       placement:
         constraints:
-          - node.hostname!=co1
+          - node.labels.t_fsbpu!=true
       update_config:
         parallelism: 1
         delay: 30s
@@ -202,6 +209,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -252,6 +262,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -276,6 +289,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -300,6 +316,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -330,6 +349,9 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 30s

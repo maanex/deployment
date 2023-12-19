@@ -24,6 +24,9 @@ services:
       placement:
         constraints:
           - node.role==manager
+          - node.labels.autoscale==true
+          - node.labels.persistent==true
+          - node.labels.hasconf==true
       update_config:
         parallelism: 1
         delay: 10s

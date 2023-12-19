@@ -1,7 +1,6 @@
 version: "3.3"
 
 services:
-
   prometheus:
     image: prom/prometheus
     volumes:
@@ -17,7 +16,10 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.role==manager
+          - node.labels.autoscale==true
+          - node.labels.persistent==true
+          - node.labels.hasconf==true
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy
@@ -42,7 +44,9 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.labels.autoscale==true
+          - node.labels.persistent==true
+          - node.labels.hasconf==true
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy

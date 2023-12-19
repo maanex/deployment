@@ -28,7 +28,8 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.role==manager
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 10s
@@ -60,4 +61,5 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.slice==B
+          - node.labels.autoscale==true
+          - node.labels.persistent==true

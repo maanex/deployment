@@ -39,7 +39,7 @@ services:
           memory: 4G
       placement:
         constraints:
-          - node.hostname == mc
+          - node.labels.t_mchost==true
       labels:
         - traefik.enable=true
         - traefik.docker.network=proxy

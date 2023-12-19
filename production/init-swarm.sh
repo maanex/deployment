@@ -9,7 +9,7 @@
 
 
 
-echo ":: Creating public network"
+echo ":: Creating public networks"
 docker network create --driver=overlay proxy
 docker network create --driver=overlay logging
 docker network create --driver=overlay redis
@@ -21,9 +21,17 @@ docker network create --driver=overlay gibu
 docker network create --driver=overlay devenv
 
 
-docker node update --label-add slice=A co1
-docker node update --label-add slice=A co2
-docker node update --label-add slice=B co3
-docker node update --label-add slice=B co4
+# "slice" devides the cluster into subsections
+# "hasconf" is TRUE if the node has this repo cloned locally (config files)
+# "persistent" is TRUE if the node is suitable for apps with persistent storage
+# "autoscale" is TRUE if the node is suitable for apps that just deploy wherever
+# "t_mchost" is TRUE if the node is the host for minecraft servers
+# "t_fsbpu" is TRUE if the node is FreeStuffBot priority upstream (app specific)
+
+echo ":: Labeling nodes"
+docker node update --label-add slice=A hasconf=true persistent=true autoscale=true t_mchost=false t_fsbpu=false co1
+docker node update --label-add slice=A hasconf=false persistent=false autoscale=true t_mchost=false t_fsbpu=true co2
+docker node update --label-add slice=B hasconf=false persistent=false autoscale=false t_mchost=true t_fsbpu=false co3
+docker node update --label-add slice=B hasconf=false persistent=false autoscale=true t_mchost=false t_fsbpu=false co4
 
 

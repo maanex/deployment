@@ -16,6 +16,11 @@ services:
     networks:
       - proxy
     deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
       update_config:
         parallelism: 1
         delay: 10s

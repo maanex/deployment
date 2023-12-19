@@ -1,0 +1,47 @@
+coder_coder                 node.labels.slice==B    S
+coder_database              node.labels.slice==B    V
+deployman_deployman         node.labels.slice==B    VS
+devenv_mongodb              node.labels.slice==B    V
+devenv_rabbitmq             node.labels.slice==B    
+devenv_postgres             node.labels.slice==B    V
+fsb_rabbitmq                node.labels.slice==B    
+fsb_api                                             
+fsb_manager                                         
+fsb_discord_interactions    node.hostname==co1      
+fsb_discord_gateway         node.hostname==co1      
+fsb_discord_publisher       node.hostname!=co1      
+fsb_app_publisher                                   
+fsb_thumbnailer                                     
+fsb_link_proxy                                      
+fsb_scraper                                         
+fsb_butler                                          
+minecraft_mcserver          node.hostname==mc       VM
+monitoring_prometheus       node.labels.slice==B    VSC
+monitoring_grafana          node.labels.slice==B    VC
+personal_maanexspace                                
+sussyalien_backbone                                 
+sussyalien_game_server                              
+traefik_traefik             node.role==manager      VSC
+tude_bot                                            S
+tudeidm_ui                                          
+tudeidm_iam                                         
+umami_umami                 node.labels.slice==B    
+umami_db                    node.labels.slice==B    VC
+weaviate_weaviate           node.labels.slice==B    V
+weaviate_t2v-transformers   node.labels.slice==B    
+weaviate_i2v-neural         node.labels.slice==B    
+
+
+          - node.role==manager
+          - node.labels.autoscale==true
+          - node.labels.persistent==true
+          - node.labels.hasconf==true
+          - node.labels.t_mchost==true
+          - node.labels.t_fsbpu==true
+
+
+[S] Docker Socket Access -> node.role==manager
+[C] Config Files Access -> node.labels.hasconf==true
+[V] Mounted Volume -> node.labels.persistent==true
+[M] Minecraft -> node.labels.mchost=true
+[^M] Not Minecraft -> node.labels.autoscale=true

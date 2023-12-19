@@ -5,7 +5,7 @@ services:
     image: prom/prometheus
     volumes:
       - prometheus-data:/prometheus
-      - /root/services/deployment/production/prometheus/:/etc/prometheus/
+      - /root/deployment/production/prometheus/:/etc/prometheus/
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -35,9 +35,9 @@ services:
     #   - prometheus
     volumes:
       - grafana-data:/var/lib/grafana
-      - /root/services/deployment/production/grafana/provisioning/:/etc/grafana/provisioning/
+      - /root/deployment/production/grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - /root/services/deployment/production/grafana/config.monitoring
+      - /root/deployment/production/grafana/config.monitoring
     networks:
       - proxy
       - metrics

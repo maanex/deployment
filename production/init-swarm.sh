@@ -32,9 +32,37 @@ docker network create --driver=overlay devenv
 # "t_fsbpu" is TRUE if the node is FreeStuffBot priority upstream (app specific)
 
 echo ":: Labeling nodes"
-docker node update --label-add slice=A hasconf=true persistent=true autoscale=true t_mchost=false t_fsbpu=false co1
-docker node update --label-add slice=A hasconf=false persistent=false autoscale=true t_mchost=false t_fsbpu=true co2
-docker node update --label-add slice=B hasconf=false persistent=false autoscale=false t_mchost=true t_fsbpu=false co3
-docker node update --label-add slice=B hasconf=false persistent=false autoscale=true t_mchost=false t_fsbpu=false co4
+docker node update \
+  --label-add slice=A \
+  --label-add hasconf=true \
+  --label-add persistent=true \
+  --label-add autoscale=true \
+  --label-add t_mchost=false \
+  --label-add t_fsbpu=false \
+  co1
+docker node update \
+  --label-add slice=A \
+  --label-add hasconf=false \
+  --label-add persistent=false \
+  --label-add autoscale=true \
+  --label-add t_mchost=false \
+  --label-add t_fsbpu=true \
+  co2
+docker node update \
+  --label-add slice=B \
+  --label-add hasconf=false \
+  --label-add persistent=false \
+  --label-add autoscale=false \
+  --label-add t_mchost=true \
+  --label-add t_fsbpu=false \
+  co3
+docker node update \
+  --label-add slice=B \
+  --label-add hasconf=false \
+  --label-add persistent=false \
+  --label-add autoscale=true \
+  --label-add t_mchost=false \
+  --label-add t_fsbpu=false \
+  co4
 
 

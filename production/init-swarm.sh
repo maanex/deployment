@@ -8,6 +8,9 @@
 # chmod +rw /var/www/html/data/htaccesstest.txt
 
 
+echo ":: Giving absurd permissions to the docker socket"
+chmod +777 /var/run/docker.sock
+
 
 echo ":: Creating public networks"
 docker network create --driver=overlay proxy

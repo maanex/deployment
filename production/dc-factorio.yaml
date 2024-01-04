@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  factorio:
+    image: factoriotools/factorio
+    environment:
+      SAVE_NAME: "map"
+    ports:
+      - target: 27015
+        published: 27015
+        protocol: tcp
+        mode: host
+      - target: 34197
+        published: 34197
+        protocol: udp
+        mode: host
+    volumes:
+      - /root/factorio:/factorio
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '2'
+          memory: 3G
+        reservations:
+          cpus: '1.5'
+          memory: 2G
+      placement:
+        constraints:
+          - node.labels.t_facthost==true

@@ -29,6 +29,7 @@ docker network create --driver=overlay devenv
 # "persistent" is TRUE if the node is suitable for apps with persistent storage
 # "autoscale" is TRUE if the node is suitable for apps that just deploy wherever
 # "t_mchost" is TRUE if the node is the host for minecraft servers
+# "t_facthost" is TRUE if the node is the host for factorio servers
 # "t_fsbpu" is TRUE if the node is FreeStuffBot priority upstream (app specific)
 
 echo ":: Labeling nodes"
@@ -38,6 +39,7 @@ docker node update \
   --label-add persistent=true \
   --label-add autoscale=true \
   --label-add t_mchost=false \
+  --label-add t_facthost=false \
   --label-add t_fsbpu=false \
   co1
 docker node update \
@@ -46,6 +48,7 @@ docker node update \
   --label-add persistent=false \
   --label-add autoscale=true \
   --label-add t_mchost=false \
+  --label-add t_facthost=false \
   --label-add t_fsbpu=true \
   co2
 docker node update \
@@ -54,6 +57,7 @@ docker node update \
   --label-add persistent=false \
   --label-add autoscale=false \
   --label-add t_mchost=true \
+  --label-add t_facthost=false \
   --label-add t_fsbpu=false \
   co3
 docker node update \
@@ -62,6 +66,7 @@ docker node update \
   --label-add persistent=false \
   --label-add autoscale=true \
   --label-add t_mchost=false \
+  --label-add t_facthost=true \
   --label-add t_fsbpu=false \
   co4
 

@@ -1,0 +1,25 @@
+file_version = 1
+name = "FreeStuff RabbitMQ"
+
+[service]
+image = "rabbitmq:3.8"
+hostname = "rabbit"
+
+[environment]
+
+[secrets]
+
+[networks]
+fsn_discord = true
+fsn_publisher = true
+fsn_tools = true
+
+[deploy]
+mode = "replicated"
+replicas = 1
+
+[deploy.placement]
+constraints = [
+  "node.labels.autoscale==true",
+  "node.labels.persistent==true"
+]

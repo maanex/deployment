@@ -1,0 +1,36 @@
+file_version = 1
+name = "FreeStuff Manager"
+
+[service]
+image = "ghcr.io/freestuffbot/fsb-manager:main"
+
+[environment]
+NODE_ENV = "production"
+FSB_MANAGER_PORT = "80"
+FSB_MANAGER_RABBIT_URL = "amqp://rabbitmq"
+
+[secrets]
+FSB_MANAGER_MONGO_URL = true
+FSB_WEBHOOK_SERVICES = true
+
+[networks]
+fsn_core = true
+fsn_discord = true
+fsn_tools = true
+
+[deploy]
+mode = "replicated"
+replicas = 1
+
+[deploy.placement]
+constraints = [
+  "node.labels.autoscale==true"
+]
+
+[deploy.updates]
+parallelism = 1
+delay = "30s"
+
+[deploy.labels]
+"xyz.freestuffbot.service.role" = "manager"
+"prometheus-job" = "fsb"

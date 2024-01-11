@@ -307,18 +307,22 @@ services:
       FSB_SCRAPER_RABBIT_URL: "amqp://rabbitmq"
       FSB_NETWORK_UMI_ALLOWED_IP_RANGE: "10.0.0.0/16"
       FSB_NETWORK_PUPPETEER: "http://disabled_todo"
+      FSB_SCRAPER_LOG_FOLDER: "/data/logs"
     networks:
       - metrics
       - fsn_tools
     secrets:
       - FSB_SCRAPER_MONGO_URL
       - FSB_WEBHOOK_SCRAPER
+    volumes:
+      - fsb_scraper_logs:/data/logs
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints:
           - node.labels.autoscale==true
+          - node.labels.persistent==true
       update_config:
         parallelism: 1
         delay: 30s
@@ -358,6 +362,9 @@ services:
       labels:
         - xyz.freestuffbot.service.role=butler
         - prometheus-job=fsb
+
+volumes:
+  fsb_scraper_logs:
 
 networks:
   # access to "external" services

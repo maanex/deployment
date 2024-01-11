@@ -315,7 +315,7 @@ services:
       - FSB_SCRAPER_MONGO_URL
       - FSB_WEBHOOK_SCRAPER
     volumes:
-      - fsb_scraper_logs:/data/logs
+      - scraper_logs:/data/logs
     deploy:
       mode: replicated
       replicas: 1
@@ -364,7 +364,7 @@ services:
         - prometheus-job=fsb
 
 volumes:
-  fsb_scraper_logs:
+  scraper_logs:
 
 networks:
   # access to "external" services

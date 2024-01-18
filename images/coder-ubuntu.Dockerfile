@@ -21,6 +21,7 @@ RUN apt-get update \
         openjdk-8-jdk \
         maven \
         wget \
+        snapd \
     # Install latest Git using their official PPA
     && add-apt-repository ppa:git-core/ppa \
     && DEBIAN_FRONTEND="noninteractive" apt-get install --yes git
@@ -33,7 +34,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.asc] http://packages.c
     && apt-get install google-cloud-cli-app-engine-java -y
 
 # Install Node
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
     && DEBIAN_FRONTEND="noninteractive" apt-get update -y \
     && apt-get install -y nodejs
 
@@ -41,6 +42,12 @@ RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y yarn
+
+# Install Bun
+RUN curl -fsSL https://bun.sh/install | bash
+
+# Install Ngrok
+RUN snap install ngrok
 
 # Add a user `coder` so that you're not developing as the `root` user
 RUN useradd coder \

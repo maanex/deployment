@@ -27,11 +27,11 @@ RUN apt-get update \
     && DEBIAN_FRONTEND="noninteractive" apt-get install --yes git
 
 # Install Google Cloud CLI
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.asc] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
-    && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | tee /usr/share/keyrings/cloud.google.asc \
-    && apt-get update -y \
-    && apt-get install google-cloud-sdk -y \
-    && apt-get install google-cloud-cli-app-engine-java -y
+# RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.asc] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+#     && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | tee /usr/share/keyrings/cloud.google.asc \
+#     && apt-get update -y \
+#     && apt-get install google-cloud-sdk -y \
+#     && apt-get install google-cloud-cli-app-engine-java -y
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \

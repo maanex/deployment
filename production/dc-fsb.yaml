@@ -367,6 +367,8 @@ services:
     image: ghcr.io/freestuffbot/fsb-dashboard:main
     environment:
       NODE_ENV: "production"
+    networks:
+      - proxy
     deploy:
       mode: replicated
       replicas: 1
@@ -379,6 +381,13 @@ services:
       labels:
         - xyz.freestuffbot.service.role=dashboard
         - prometheus-job=fsb
+        - traefik.enable=true
+        - traefik.docker.network=proxy
+        - traefik.http.services.fsb-dash.loadbalancer.server.port=80
+        - traefik.http.routers.fsb-dash.entrypoints=https
+        - traefik.http.routers.fsb-dash.rule=Host(`newdash.freestuffbot.xyz`)
+        - traefik.http.routers.fsb-dash.tls.certresolver=cloudflare
+        - traefik.http.routers.fsb-dash.tls.domains[0].main=newdash.freestuffbot.xyz
 
 volumes:
   scraper_logs:

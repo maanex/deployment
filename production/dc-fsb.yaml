@@ -363,6 +363,23 @@ services:
         - xyz.freestuffbot.service.role=butler
         - prometheus-job=fsb
 
+  dashboard:
+    image: ghcr.io/freestuffbot/fsb-dashboard:main
+    environment:
+      NODE_ENV: "production"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.autoscale==true
+      update_config:
+        parallelism: 1
+        delay: 30s
+      labels:
+        - xyz.freestuffbot.service.role=dashboard
+        - prometheus-job=fsb
+
 volumes:
   scraper_logs:
 

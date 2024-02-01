@@ -367,6 +367,7 @@ services:
     image: ghcr.io/freestuffbot/fsb-dashboard:main
     environment:
       NODE_ENV: "production"
+      API_HOST: "https://api.freestuffbot.xyz/dash2"
     networks:
       - proxy
     deploy:

@@ -365,6 +365,7 @@ services:
 
   dashboard:
     image: ghcr.io/freestuffbot/fsb-dashboard:main
+    entrypoint: sleep 20000
     environment:
       NODE_ENV: "production"
     networks:

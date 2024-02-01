@@ -23,6 +23,8 @@ services:
       FSB_API_RABBIT_URL: "amqp://rabbitmq"
       FSB_API_DASH_CORS_ORIGIN: "https://dashboard.freestuffbot.xyz"
       FSB_API_DASH_OAUTH_CALLBACK_URL: "https://dashboard.freestuffbot.xyz/oauth/callback"
+      FSB_API_DASH2_CORS_ORIGIN: "https://newdash.freestuffbot.xyz"
+      FSB_API_DASH2_OAUTH_CALLBACK_URL: "https://newdash.freestuffbot.xyz/oauth/callback"
       FSB_NETWORK_GIBU_GQL_ENDPOINT: "http://gibu_api_games/graphql"
       FSB_NETWORK_THUMBNAILER: "http://thumbnailer"
       FSB_NETWORK_MANAGER: "http://manager"

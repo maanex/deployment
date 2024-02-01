@@ -429,6 +429,10 @@ secrets:
     external: true
   FSB_API_OAUTH_DISCORD_APPSECRET:
     external: true
+  FSB_API_OAUTH_GITHUB_APPID:
+    external: true
+  FSB_API_OAUTH_GITHUB_APPSECRET:
+    external: true
   FSB_API_PRIVATE_KEY:
     external: true
   FSB_API_AUDITLOG_DEST_DISCORD:

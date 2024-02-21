@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   factorio:
-    image: factoriotools/factorio:1.1.100
+    image: factoriotools/factorio:1.1.104
     environment:
       SAVE_NAME: "map"
     ports:

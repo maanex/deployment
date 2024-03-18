@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   weaviate:
-    image: semitechnologies/weaviate:1.22.3
+    image: cr.weaviate.io/semitechnologies/weaviate:1.22.3
     command:
       - --host
       - 0.0.0.0
